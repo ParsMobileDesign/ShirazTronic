@@ -1,0 +1,232 @@
+﻿@model ShirazTronic.Models.ViewModels.VmProduct;
+@using ShirazTronic.Extensions;
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
+}
+
+<div class="card">
+    <div class="card-header">
+        <h5>Edit Product</h5>
+    </div>
+    <div class="card-body">
+        <form asp-action="Save">
+            <input type="hidden" asp-for="Product.Id" id="edProduct" />
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label asp-for="Product.Title"></label>
+                    <input asp-for="Product.Title" class="form-control" />
+                </div>
+                <div class="form-group col-md-3">
+                    <label asp-for="Product.Price"></label>
+                    <input asp-for="Product.Price" class="form-control" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label asp-for="Product.ShortDescription"></label>
+                    <input asp-for="Product.ShortDescription" class="form-control" />
+                </div>
+                <div class="form-group col-md-3">
+                    <label asp-for="Product.StockQuantity"></label>
+                    <input asp-for="Product.StockQuantity" class="form-control" />
+                </div>
+                <div class="form-group col-md-3">
+                    <label asp-for="Product.NotifyQuantityBelow"></label>
+                    <input asp-for="Product.NotifyQuantityBelow" class="form-control" />
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">Save</button>
+            <a class="btn btn-success" asp-action="Index">Back</a>
+        </form>
+    </div>
+    <div id="accordion">
+        <div class="card">
+            <div class="card-header" id="headingThree">
+                <h5 class="mb-0">
+                    <button class="btn" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                        Product Specification
+                    </button>
+                    @*@if (Model.Product.Id > 0)
+                        {
+                            <a class="new-btn float-right " asp-action="newProductSpec" asp-route-id="@Model.Product.Id"><i class="fas fa-plus"></i></a>
+                        }*@
+                </h5>
+            </div>
+            <div id="collapseThree" class="collapse show" aria-labelledby="headingThree" data-parent="#accordion">
+                <div class="card-body">
+                    <div class="form-group form-row">
+                        <div class="col-3">
+                            <select id="edSpec" class="form-control" asp-items="Model.Specifications.GetSelectListItems(0)">
+                            </select>
+                        </div>
+                        <div class="col-3">
+                            <select id="edSpecVal" class="form-control">
+                            </select>
+                        </div>
+                        @if (Model.Product.Id > 0)
+                        {
+                            <a class="btn btn-info text-white" id="btnAddProSpec"><i class="fas fa-plus"></i> Add Specification</a>
+                        }
+                        </div>
+                    <div class="row">
+                        @if (Model.ProductSpecs != null && Model.ProductSpecs.Count > 0)
+                        {
+                            <table class="table table-striped table-bordered table-sm">
+                                <thead>
+                                    <tr class="table-secondary">
+                                        <th scope="col">Title</th>
+                                        <th scope="col">Value</th>
+                                        <th scope="col">Delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    @foreach (var spec in Model.ProductSpecs)
+                                    {
+                                        <tr>
+                                            <td>@Html.DisplayFor(m => spec.SpecificationValue.Specification.Title)</td>
+                                            <td>@Html.DisplayFor(m => spec.SpecificationValue.Value)</td>
+                                            <td>
+                                                <a asp-action="DeleteProductSpec" asp-route-Id="@spec.Id">
+                                                    <i class='bx bx-trash bx-lg'></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+
+
+                                </tbody>
+                            </table>}
+                        else
+                        {
+                            <div>no specification have defined yet...</div>
+                        }
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header" id="headingTwo">
+                <h5 class="mb-0">
+                    <button class="btn collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        Product Images
+                    </button>
+                    @if (Model.Product.Id > 0)
+                    {
+                        <a class="new-btn float-right " asp-action="newProductImage" asp-route-id="@Model.Product.Id"><i class="fas fa-plus"></i></a>
+                    }
+                </h5>
+            </div>
+            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                <div class="card-body">
+                    <table class="table table-striped table-bordered table-sm">
+                        <thead>
+                            <tr class="table-secondary">
+                                <th scope="col">Image</th>
+                                <th scope="col">Display Order</th>
+                                <th scope="col">Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var image in Model.ProductImages)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(m => image.ImageAddr)</td>
+                                    <td>@Html.DisplayFor(m => image.DisplayOrder)</td>
+                                    <td>
+                                        <a asp-action="DeleteProductImage" asp-route-Id="@image.Id" asp-route-ProductId="@image.ProductId">
+                                            <i class='bx bx-trash bx-lg'></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header" id="headingOne">
+                <h5 class="mb-0">
+                    <button class="btn" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        Product Categories
+                    </button>
+                    @if (Model.Product.Id > 0)
+                    {
+                        <a class="new-btn float-right" asp-action="newProductCategory" asp-route-id="@Model.Product.Id"><i class="fas fa-plus"></i></a>
+                    }
+                </h5>
+            </div>
+
+            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                <div class="card-body">
+                    <table class="table table-striped table-bordered table-hover thead-light table-sm">
+                        <thead>
+                            <tr class="table-secondary">
+                                <th scope="col">Category Title</th>
+                                <th scope="col">Sub Category Title</th>
+                                <th scope="col">Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var catPro in Model.CatProducts)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(m => catPro.Category.Title)</td>
+                                    <td>@Html.DisplayFor(m => catPro.SubCategory.Title)</td>
+                                    <td>
+                                        <a asp-action="DeleteProductCategory" asp-route-Id="@catPro.Id" asp-route-ProductId="@catPro.ProductId">
+                                            <i class='bx bx-trash bx-lg'></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+@section Scripts
+{
+    <script>
+         $(document).ready(function () {
+             getSpecVal();
+            $('#edSpec').change(function () {
+                getSpecVal();
+            })
+             $('#btnAddProSpec').click(function () {
+                addProSpec();
+            })
+            function getSpecVal() {
+                var url = '@Url.Content("~/")' + "Admin/SpecificationValue/GetSpecVal";
+                var Catid = $('#edSpec').val();
+                $.getJSON(url, { id: Catid }, function (data) {
+                    var controls = "";
+                    for (var i = 0; i < data.length; i++) {
+                        var item = data[i];
+                        controls+= "<option value='"+item.value+"'>"+item.text+"</option>";
+                    }
+                    console.log(controls);
+
+                    $('#edSpecVal').html(controls);
+                });
+             }
+             function addProSpec() {
+                 var url = '@Url.Content("~/")' + "Admin/Product/AddProductSpec";
+                 var SpecValId = $('#edSpecVal').val();
+                 var ProductId = $('#edProduct').val();
+                 $.getJSON(url, { productId: ProductId, specValId: SpecValId }, function (data) {
+                });
+            }
+
+        })
+    </script>
+}
+

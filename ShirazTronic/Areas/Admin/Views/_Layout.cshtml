@@ -1,0 +1,181 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ShirazTronic</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="~/lib/icofont/icofont.min.css" rel="stylesheet">
+    <link href="~/lib/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <section id="topbar" class="d-none d-lg-block">
+        <div class="container d-flex">
+            <div class="contact-info mr-auto">
+                <i class="icofont-envelope"></i><a href="mailto:contact@shiraztronic.com">contact@shiraztronic.com</a>
+                <i class="icofont-phone"></i> +98 7137258866
+            </div>
+            <div class="social-links">
+                <a href="#" class="twitter"><i class="icofont-twitter"></i></a>
+                <a href="#" class="facebook"><i class="icofont-facebook"></i></a>
+                <a href="#" class="instagram"><i class="icofont-instagram"></i></a>
+                <a href="#" class="skype"><i class="icofont-skype"></i></a>
+                <a href="#" class="linkedin"><i class="icofont-linkedin"></i></i></a>
+            </div>
+        </div>
+    </section>
+    <header>
+        <div class="container d-flex" style="justify-content: space-between;">
+            <nav class="nav-menu d-none d-lg-block">
+                <ul>
+                    <li class="active"><a asp-action="Index" asp-controller="Home" asp-area="Admin">Home</a></li>
+                    <li class="drop-down">
+                        <a href="" >Settings</a>
+                        <ul>
+                            <li><a asp-action="Index" asp-controller="Category" asp-area="Admin">Categories</a></li>
+                            <li class="drop-down">
+                                <a href="#">Connectors</a>
+                                <ul>
+                                    <li><a href="#">Audio Devices</a></li>
+
+                                    <li><a class='item-selected' href="#">Encoders</a></li>
+                                    <li><a class='item-selected' href="#">Hardware</a></li>
+                                    <li><a class='item-selected' href="#">I/O Modules</a></li>
+                                    <li><a class='item-selected' href="#">Industrial Automation</a></li>
+                                    <li><a class='item-selected' href="#">Motors Drives</a></li>
+                                    <li><a class='item-selected' href="#">Printers</a></li>
+                                </ul>
+                            </li>
+                            <li class="drop-down">
+                                <a href="#">Electromechanical</a>
+                                <ul>
+                                    <li><a href="#">Audio Devices</a></li>
+
+                                    <li><a href="#">Encoders</a></li>
+                                    <li><a href="#">Hardware</a></li>
+                                    <li><a href="#">I/O Modules</a></li>
+                                    <li><a href="#">Industrial Automation</a></li>
+                                    <li><a href="#">Motors Drives</a></li>
+                                    <li><a href="#">Printers</a></li>
+                                    <li><a href="#">Audio Devices</a></li>
+
+                                    <li><a href="#">Encoders</a></li>
+                                    <li><a href="#">Hardware</a></li>
+                                    <li><a href="#">I/O Modules</a></li>
+                                    <li><a href="#">Industrial Automation</a></li>
+                                    <li><a href="#">Motors Drives</a></li>
+                                    <li><a href="#">Printers</a></li>
+                                </ul>
+                            </li>
+                            <li class="drop-down">
+                                <a href="#">
+                                    Embedded Solutions
+                                </a>
+                                <ul>
+                                    <li><a href="#">I/O Modules</a></li>
+                                    <li><a href="#">Industrial Automation</a></li>
+                                    <li><a href="#">Motors Drives</a></li>
+                                    <li><a href="#">Printers</a></li>
+                                    <li><a href="#">I/O Modules</a></li>
+                                    <li><a href="#">Industrial Automation</a></li>
+                                    <li><a href="#">Motors Drives</a></li>
+                                    <li><a href="#">Printers</a></li>
+
+                                </ul>
+                            </li>
+                            <li class="drop-down">
+                                <a href="#">Enclosures</a>
+                                <ul>
+                                    <li><a href="#">Motors Drives</a></li>
+                                    <li><a href="#">Printers</a></li>
+                                    <li><a href="#">I/O Modules</a></li>
+                                    <li><a href="#">Industrial Automation</a></li>
+
+                                </ul>
+                            </li>
+                            <li class="drop-down">
+                                <a href="#">
+                                    Engineering Tools
+                                </a>
+                                <ul>
+
+                                    <li><a href="#">Encoders</a></li>
+                                    <li><a href="#">Hardware</a></li>
+                                    <li><a href="#">I/O Modules</a></li>
+                                    <li><a href="#">Industrial Automation</a></li>
+                                    <li><a href="#">Motors Drives</a></li>
+                                    <li><a href="#">Printers</a></li>
+                                </ul>
+                            </li>
+                            <li class="drop-down">
+                                <a href="#">
+                                    Industrial Automation
+                                </a>
+                                <ul>
+                                    <li><a href="#">Industrial Automation</a></li>
+                                    <li><a href="#">Motors Drives</a></li>
+                                    <li><a href="#">Printers</a></li>
+                                </ul>
+                            </li>
+                            <li class="drop-down">
+                                <a href="#">
+                                    LED Lighting
+                                </a>
+                                <ul>
+
+                                    <li><a href="#">Printers</a></li>
+                                </ul>
+                            </li>
+                            <li class="drop-down">
+                                <a href="#">
+                                    Passive Components
+                                </a>
+                                <ul>
+                                    <li><a href="#">Industrial Automation</a></li>
+                                    <li><a href="#">Motors Drives</a></li>
+                                    <li><a href="#">Printers</a></li>
+                                </ul>
+                            </li>
+                            <li class="drop-down">
+                                <a href="#">Power</a>
+                                <ul>
+                                    <li><a href="#">Encoders</a></li>
+                                    <li><a href="#">Hardware</a></li>
+                                    <li><a href="#">I/O Modules</a></li>
+                                    <li><a href="#">Industrial Automation</a></li>
+                                    <li><a href="#">Motors Drives</a></li>
+                                    <li><a href="#">Printers</a></li>
+                                </ul>
+                            </li>
+
+                        </ul>
+                    </li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav><!-- .nav-menu -->
+            <!-- <div class="logo">
+            <h1 class="text-light"><a href="a.html">Shiraz-Tronic</a></h1>
+            <!-- Uncomment below if you prefer to use an image logo -->
+            <!-- <a href="index.html"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>
+            </div> -->
+            <div class="logo d-flex justify-content-center align-items-center fnt-raleway">Shiraz-Tronic</div>
+        </div>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2020 - ShirazTronic by Pars Mobile Design - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

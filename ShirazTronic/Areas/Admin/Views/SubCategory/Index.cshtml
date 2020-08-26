@@ -1,0 +1,44 @@
+﻿@model IEnumerable<SubCategory>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
+}
+<div class="row bg-white rounded">
+    <div class="col-6"><h2>Sub Category List</h2></div>
+    <div class="col-6 text-right">
+        <partial name="_CreateButton" />
+    </div>
+</div>
+<div class="row">
+    @if (Model.Count() > 0)
+    {
+        <table class="table table-bordered table-hover table-sm  custom-data-table">
+            <thead>
+                <tr class="table-secondary">
+                    <th scope="col">@Html.DisplayNameFor(m => m.Id)</th>
+                    <th scope="col">@Html.DisplayNameFor(m => m.Title)</th>
+                    <th scope="col">@Html.DisplayNameFor(m => m.Category.Title)</th>
+                    <th scope="col">Has Picture</th>
+                    <th scope="col">Edit/Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var subCat in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(m => subCat.Id)</td>
+                        <td>@Html.DisplayFor(m => subCat.Title)</td>
+                        <td>@Html.DisplayFor(m => subCat.Category.Title)</td>
+                        <td>@(subCat.Picture.Length>0?true:false)</td>
+                        <td><partial name="_TableEditDeleteButtons" model="subCat.Id" /></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>no Sub Category exists...</p>
+    }
+
+</div>

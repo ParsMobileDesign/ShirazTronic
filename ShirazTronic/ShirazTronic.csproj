@@ -1,0 +1,103 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>aspnet-ShirazTronic-C0E6F5D7-CC87-49B7-8574-B9D64C077E7A</UserSecretsId>
+    <CopyRefAssembliesToPublishDirectory>false</CopyRefAssembliesToPublishDirectory>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Data\Migrations\20200810075855_AddCategoryTable.cs" />
+    <Compile Remove="Data\Migrations\20200810075855_AddCategoryTable.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200810080258_AddCategoryTable.cs" />
+    <Compile Remove="Data\Migrations\20200810080258_AddCategoryTable.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200810080740_AddCategoryModel.cs" />
+    <Compile Remove="Data\Migrations\20200810080740_AddCategoryModel.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200810095122_AddCategoryModel.cs" />
+    <Compile Remove="Data\Migrations\20200810095122_AddCategoryModel.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200810102425_AddCategorySchema.cs" />
+    <Compile Remove="Data\Migrations\20200810102425_AddCategorySchema.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200810102633_AddCategorySchema.cs" />
+    <Compile Remove="Data\Migrations\20200810102633_AddCategorySchema.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200810102819_AddCategorySchema.cs" />
+    <Compile Remove="Data\Migrations\20200810102819_AddCategorySchema.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200811095026_alterPictureIdFromIntToByteArrayCategory.cs" />
+    <Compile Remove="Data\Migrations\20200811095026_alterPictureIdFromIntToByteArrayCategory.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200811095628_addSubCategorySchema.cs" />
+    <Compile Remove="Data\Migrations\20200811095628_addSubCategorySchema.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200814163612_addKeyToSubCategorySchema.cs" />
+    <Compile Remove="Data\Migrations\20200814163612_addKeyToSubCategorySchema.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200815061216_alterSubCategoryIdFromByteToShort.cs" />
+    <Compile Remove="Data\Migrations\20200815061216_alterSubCategoryIdFromByteToShort.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200815062224_alterIdFromByteToShortInSub.cs" />
+    <Compile Remove="Data\Migrations\20200815062224_alterIdFromByteToShortInSub.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200815063436_addCatAndSub.cs" />
+    <Compile Remove="Data\Migrations\20200815063436_addCatAndSub.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200818065901_AddProductSchema.cs" />
+    <Compile Remove="Data\Migrations\20200818065901_AddProductSchema.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200818142741_add_companyInfosSchema.cs" />
+    <Compile Remove="Data\Migrations\20200818142741_add_companyInfosSchema.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200822184428_add-SpecificationSchema.cs" />
+    <Compile Remove="Data\Migrations\20200822184428_add-SpecificationSchema.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200822184928_add-SpecificationValue-Schema.cs" />
+    <Compile Remove="Data\Migrations\20200822184928_add-SpecificationValue-Schema.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200826084256_Change-Categoryporoduct-to-ProductCategory.cs" />
+    <Compile Remove="Data\Migrations\20200826084256_Change-Categoryporoduct-to-ProductCategory.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200826090853_seeding.cs" />
+    <Compile Remove="Data\Migrations\20200826090853_seeding.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.6" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.6" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.6" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.7">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\lib\DataTables\Buttons-1.6.3\js\buttons.bootstrap4.js" />
+    <None Include="wwwroot\lib\DataTables\Buttons-1.6.3\js\buttons.bootstrap4.min.js" />
+    <None Include="wwwroot\lib\DataTables\Buttons-1.6.3\swf\flashExport.swf" />
+    <None Include="wwwroot\lib\DataTables\DataTables-1.10.21\js\dataTables.bootstrap4.js" />
+    <None Include="wwwroot\lib\DataTables\DataTables-1.10.21\js\dataTables.bootstrap4.min.js" />
+    <None Include="wwwroot\lib\DataTables\datatables.min.js" />
+    <None Include="wwwroot\lib\DataTables\FixedHeader-3.1.7\js\fixedHeader.bootstrap4.js" />
+    <None Include="wwwroot\lib\DataTables\FixedHeader-3.1.7\js\fixedHeader.bootstrap4.min.js" />
+    <None Include="wwwroot\lib\DataTables\Scroller-2.0.2\js\scroller.bootstrap4.js" />
+    <None Include="wwwroot\lib\DataTables\Scroller-2.0.2\js\scroller.bootstrap4.min.js" />
+    <None Include="wwwroot\lib\DataTables\SearchPanes-1.1.1\js\searchPanes.bootstrap4.js" />
+    <None Include="wwwroot\lib\DataTables\SearchPanes-1.1.1\js\searchPanes.bootstrap4.min.js" />
+    <None Include="wwwroot\lib\owl.carousel\LICENSE" />
+    <None Include="wwwroot\lib\owl.carousel\owl.carousel.js" />
+    <None Include="wwwroot\lib\owl.carousel\owl.carousel.min.js" />
+    <None Include="wwwroot\lib\owl.carousel\README.md" />
+    <None Include="wwwroot\lib\slick\config.rb" />
+    <None Include="wwwroot\lib\slick\fonts\slick.svg" />
+    <None Include="wwwroot\lib\slick\slick-theme.less" />
+    <None Include="wwwroot\lib\slick\slick-theme.scss" />
+    <None Include="wwwroot\lib\slick\slick.js" />
+    <None Include="wwwroot\lib\slick\slick.less" />
+    <None Include="wwwroot\lib\slick\slick.min.js" />
+    <None Include="wwwroot\lib\slick\slick.scss" />
+    <None Include="wwwroot\webfonts\fa-brands-400.svg" />
+    <None Include="wwwroot\webfonts\fa-brands-400.woff2" />
+    <None Include="wwwroot\webfonts\fa-regular-400.svg" />
+    <None Include="wwwroot\webfonts\fa-regular-400.woff2" />
+    <None Include="wwwroot\webfonts\fa-solid-900.svg" />
+    <None Include="wwwroot\webfonts\fa-solid-900.woff2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot\image\tempProducts\10.jpg">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+</Project>

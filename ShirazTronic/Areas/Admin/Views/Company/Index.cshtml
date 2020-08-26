@@ -1,0 +1,43 @@
+﻿@model IEnumerable<CompanyInfos>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
+}
+
+<div class="row bg-white rounded">
+    <div class="col-6"><h2>Category List</h2></div>
+    <div class="col-6 text-right">
+        @if (Model.Count() == 0)
+        {
+            <partial name="_CreateButton" />
+        }
+    </div>
+</div>
+<div class="row">
+    <table class="table table-bordered table-hover table-sm custom-data-table">
+        <thead>
+            <tr class="table-secondary">
+                <th scope="col">@Html.DisplayNameFor(m => m.Title)</th>
+                <th scope="col">@Html.DisplayNameFor(m => m.Address)</th>
+                <th scope="col">@Html.DisplayNameFor(m => m.EMail)</th>
+                <th scope="col">@Html.DisplayNameFor(m => m.TelNo)</th>
+                <th scope="col">@Html.DisplayNameFor(m => m.Description)</th>
+                <th scope="col">Edit/Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var companyInfo in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(m => companyInfo.Title)</td>
+                    <td>@Html.DisplayFor(m => companyInfo.Address)</td>
+                    <td>@Html.DisplayFor(m => companyInfo.EMail)</td>
+                    <td>@Html.DisplayFor(m => companyInfo.TelNo)</td>
+                    <td>@Html.DisplayFor(m => companyInfo.Description)</td>
+                    <td><partial name="_TableEditDeleteButtons" model="(int)companyInfo.Id" /></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

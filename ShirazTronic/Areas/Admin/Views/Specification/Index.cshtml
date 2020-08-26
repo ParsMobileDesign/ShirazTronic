@@ -1,0 +1,33 @@
+﻿@model IEnumerable<Specification>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
+}
+
+<div class="row bg-white rounded">
+    <div class="col-6"><h2>Specification List</h2></div>
+    <div class="col-6 text-right">
+        <partial name="_CreateButton" />
+    </div>
+</div>
+<div class="row">
+    <table id="SpecTable" class="table table-bordered table-hover table-sm custom-data-table">
+        <thead>
+            <tr class="table-secondary">
+                <th scope="col">@Html.DisplayNameFor(m => m.Title)</th>
+                <th scope="col">@Html.DisplayNameFor(m => m.DisplayOrder)</th>
+                <th scope="col">Edit/Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var spec in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(m => spec.Title)</td>
+                    <td>@Html.DisplayFor(m => spec.DisplayOrder)</td>
+                    <td><partial name="_TableEditDeleteButtons" model="spec.Id" /></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

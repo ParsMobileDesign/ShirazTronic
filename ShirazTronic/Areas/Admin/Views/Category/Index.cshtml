@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Category>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
+}
+
+<div class="row bg-white rounded">
+    <div class="col-6"><h2>Category List</h2></div>
+    <div class="col-6 text-right">
+        <partial name="_CreateButton" />
+    </div>
+</div>
+<div class="row">
+    <table class="table table-bordered table-hover  table-sm  custom-data-table">
+        <thead>
+            <tr class="table-secondary">
+                <th scope="col">@Html.DisplayNameFor(m => m.Id)</th>
+                <th scope="col">@Html.DisplayNameFor(m => m.Title)</th>
+                @*<th scope="col">@Html.DisplayNameFor(m => m.PictureId)</th>*@
+                <th scope="col">Edit/Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var category in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(m => category.Id)</td>
+                    <td>@Html.DisplayFor(m => category.Title)</td>
+                    @*<td>@Html.DisplayFor(m => category.PictureId)</td>*@
+                    <td><partial name="_TableEditDeleteButtons" model="category.Id" /></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+

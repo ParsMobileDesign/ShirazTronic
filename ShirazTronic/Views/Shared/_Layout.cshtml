@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ShirazTronic</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link href="~/lib/icofont/icofont.min.css" rel="stylesheet">
+    <link href="~/lib/boxicons/css/boxicons.min.css" rel="stylesheet">
+    <link href="~/lib/owl.carousel/assets/owl.carousel.css" rel="stylesheet" />
+    <link href="~/lib/owl.carousel/assets/owl.theme.default.css" rel="stylesheet" />
+    <link href="~/lib/slick/slick.css" rel="stylesheet" />
+    <link href="~/lib/slick/slick-theme.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/all.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+</head>
+<body>
+    <section id="topbar" class="d-none d-lg-block">
+        <div class="container d-flex">
+            <div class="contact-info mr-auto">
+                <i class="icofont-envelope"></i><a href="mailto:contact@shiraztronic.com">contact@shiraztronic.com</a>
+                <i class="icofont-phone"></i> +98 7137258866
+            </div>
+            <div class="social-links">
+                <a href="#" class="twitter"><i class='bx bxl-twitter'></i></a>
+                <a href="#" class="facebook"><i class='bx bxl-facebook'></i></a>
+                <a href="#" class="instagram"><i class='bx bxl-instagram'></i></a>
+                <a href="#" class="skype"><i class='bx bxl-skype'></i></a>
+                <a href="#" class="linkedin"><i class='bx bxl-linkedin-square'></i></a>
+            </div>
+        </div>
+    </section>
+    <header class="customer-header">
+        <div class="container d-flex justify-content-sm-between">
+            @await Component.InvokeAsync("Navigation")
+            @*<partial  name="_UserMenu"/>*@
+            <div class="logo d-flex align-items-center fnt-raleway">
+                <div class="dropdown">
+                    <button class="btn dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Account and orders
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="#">Sign in</a>
+                        <a class="dropdown-item" href="#">Account</a>
+                        <a class="dropdown-item" href="#">Shopping Cart</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Sign Out</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="container-fluid">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2020 - ShirazTronic by Pars Mobile Design - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/jquery.sticky.js"></script>
+    <script src="~/js/jquery.sticky.js"></script>
+    <script src="~/lib/owl.carousel/owl.carousel.min.js"></script>
+    <script src="~/lib/slick/slick.min.js"></script>
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

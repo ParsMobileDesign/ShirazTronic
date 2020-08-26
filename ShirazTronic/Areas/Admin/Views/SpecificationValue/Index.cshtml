@@ -1,0 +1,43 @@
+﻿@model IEnumerable<SpecificationValue>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
+}
+<div class="row bg-white rounded">
+    <div class="col-6"><h2>Specification Values</h2></div>
+    <div class="col-6 text-right">
+        <partial name="_CreateButton" />
+    </div>
+</div>
+<div class="row">
+    @if (Model.Count() > 0)
+    {
+        <table class="table table-bordered table-hover table-sm custom-data-table custom-data-table">
+            <thead>
+                <tr class="table-secondary">
+                    <th scope="col">@Html.DisplayNameFor(m => m.Id)</th>
+                    <th scope="col">@Html.DisplayNameFor(m => m.Specification.Title)</th>
+                    <th scope="col">@Html.DisplayNameFor(m => m.Value)</th>
+                    <th scope="col">Edit/Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var specVal in Model)
+                {
+                    <tr>
+                        <td>@Html.DisplayFor(m => specVal.Id)</td>
+                        <td>@Html.DisplayFor(m => specVal.Specification.Title)</td>
+                        <td>@Html.DisplayFor(m => specVal.Value)</td>
+                        <td><partial name="_TableEditDeleteButtons" model="specVal.Id" /></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>no Specification Value exists...</p>
+    }
+
+</div>
+

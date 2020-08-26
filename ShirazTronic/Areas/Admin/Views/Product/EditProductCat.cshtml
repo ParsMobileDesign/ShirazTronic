@@ -1,0 +1,61 @@
+﻿@model ShirazTronic.Models.ViewModels.VmProductCategories
+@using ShirazTronic.Extensions;
+@{
+    ViewData["Title"] = "editProductCat";
+    Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
+}
+
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <h3>Edit @Model.CatProduct.Product.Title Category</h3>
+        </div>
+        <div class="card-body">
+            <form asp-action="SaveCategoryProduct">
+                <input type="hidden" asp-for="CatProduct.Id" />
+                <input type="hidden" asp-for="CatProduct.ProductId" />
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label asp-for="CatProduct.Category.Title"></label>
+                        <select id="edCategory" asp-for="CatProduct.CatId" asp-items="Model.Categories.GetSelectListItems(Model.CatProduct.CatId)" class="form-control">             </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-4">
+                        <label asp-for="CatProduct.SubCatId"></label>
+                        <select id="edSubCategory" asp-for="CatProduct.SubCatId" asp-items="@(new SelectList(string.Empty,"Id","Title"))" class="form-control">
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary">Save</button>
+                <a class="btn btn-success" asp-action="Index">Back</a>
+            </form>
+        </div>
+    </div>
+</div>
+@section Scripts
+{
+    <script>
+        $(document).ready(function () {
+            getSubCategory();
+            $('#edCategory').change(function () {
+                getSubCategory();
+            })
+            function getSubCategory() {
+                var url = '@Url.Content("~/")' + "Admin/SubCategory/GetSubCategory";
+                var Catid = $('#edCategory').val();
+                $.getJSON(url, { id: Catid }, function (data) {
+                    var controls = "";
+                    for (var i = 0; i < data.length; i++) {
+                        var item = data[i];
+                        controls+= "<option value='"+item.value+"'>"+item.text+"</option>";
+                    }
+                    console.log(controls);
+
+                    $('#edSubCategory').html(controls);
+                });
+            }
+
+        })
+    </script>
+}
