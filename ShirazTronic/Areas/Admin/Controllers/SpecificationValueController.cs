@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -15,6 +16,7 @@ using ShirazTronic.Models.ViewModels;
 namespace ShirazTronic.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = Utility.ManagerUser)]
     public class SpecificationValueController : Controller
     {
         ApplicationDbContext db;

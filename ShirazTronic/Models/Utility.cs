@@ -12,6 +12,11 @@ namespace ShirazTronic
     {
        
         public const string defaultProductImage = "default.jpg";
+
+        // User Roles
+        public const string ManagerUser = "Manager";
+        public const string ControllerUser = "Controller";
+        public const string CustomerUser = "Customer";
         /// <summary>
         /// Save Files based on Input and then return saved File's name
         /// </summary>

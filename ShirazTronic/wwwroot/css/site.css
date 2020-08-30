@@ -1,6 +1,9 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
+html {
+    scroll-behavior: smooth;
+}
 a.navbar-brand {
     white-space: normal;
     text-align: center;
@@ -62,18 +65,183 @@ html {
 
 body {
     /* Margin bottom by footer height */
-    margin-bottom: 60px;
+    /*    margin-bottom: 60px;*/
 }
 
-.footer {
+/*.footer {
     position: absolute;
     bottom: 0;
     width: 100%;
     white-space: nowrap;
-    line-height: 60px; /* Vertically center the text there */
+    line-height: 60px;*/ /* Vertically center the text there */
+/*}*/
+
+a.btn {
+    cursor: pointer
+}
+/*--------------------------------------------------------------
+# Footer
+--------------------------------------------------------------*/
+#footer {
+    color: #4e4948;
+    font-size: 14px;
+    background: #ded6d4;
 }
 
+    #footer .footer-top {
+        padding: 60px 0 30px 0;
+        background: #edeae9;
+    }
 
+        #footer .footer-top .footer-contact {
+            margin-bottom: 30px;
+        }
+
+            #footer .footer-top .footer-contact h3 {
+                font-size: 22px;
+                margin: 0 0 10px 0;
+                padding: 2px 0 2px 0;
+                line-height: 1;
+                font-weight: 500;
+                letter-spacing: 1px;
+                text-transform: uppercase;
+                color: #5f4d4d;
+            }
+
+            #footer .footer-top .footer-contact p {
+                font-size: 14px;
+                line-height: 24px;
+                margin-bottom: 0;
+                font-family: "Muli", sans-serif;
+                color: #8c7e77;
+            }
+
+        #footer .footer-top h4 {
+            font-size: 16px;
+            font-weight: bold;
+            color: #5f4d4d;
+            position: relative;
+            padding-bottom: 12px;
+        }
+
+        #footer .footer-top .footer-links {
+            margin-bottom: 30px;
+        }
+
+            #footer .footer-top .footer-links ul {
+                list-style: none;
+                padding: 0;
+                margin: 0;
+            }
+
+                #footer .footer-top .footer-links ul i {
+                    padding-right: 2px;
+                    color: #fd6f41;
+                    font-size: 18px;
+                    line-height: 1;
+                }
+
+                #footer .footer-top .footer-links ul li {
+                    padding: 10px 0;
+                    display: flex;
+                    align-items: center;
+                }
+
+                    #footer .footer-top .footer-links ul li:first-child {
+                        padding-top: 0;
+                    }
+
+                #footer .footer-top .footer-links ul a {
+                    color: #8c817c;
+                    transition: 0.3s;
+                    display: inline-block;
+                    line-height: 1;
+                }
+
+                    #footer .footer-top .footer-links ul a:hover {
+                        text-decoration: none;
+                        color: #1d1919;
+                    }
+
+    #footer .footer-newsletter {
+        font-size: 15px;
+    }
+
+        #footer .footer-newsletter h4 {
+            font-size: 16px;
+            font-weight: bold;
+            color: #5f4d4d;
+            position: relative;
+            padding-bottom: 12px;
+        }
+
+        #footer .footer-newsletter form {
+            margin-top: 30px;
+            background: #fff;
+            padding: 6px 10px;
+            position: relative;
+            border-radius: 4px 0 0 4px;
+            text-align: left;
+        }
+
+            #footer .footer-newsletter form input[type="email"] {
+                border: 0;
+                padding: 4px 8px;
+                width: calc(100% - 100px);
+            }
+
+            #footer .footer-newsletter form input[type="submit"] {
+                position: absolute;
+                top: 0;
+                right: -4px;
+                bottom: 0;
+                border: 0;
+                background: none;
+                font-size: 16px;
+                padding: 0 20px;
+                background: #f03c02;
+                color: #fff;
+                transition: 0.3s;
+                border-radius: 0 4px 4px 0;
+                box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
+            }
+
+                #footer .footer-newsletter form input[type="submit"]:hover {
+                    background: #fd5c28;
+                }
+
+    #footer .credits {
+        padding-top: 5px;
+        font-size: 13px;
+        color: #464640;
+    }
+
+        #footer .credits a {
+            color: white;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+    #footer .social-links a {
+        font-size: 18px;
+        display: inline-block;
+        background: #f03c02;
+        color: #fff;
+        line-height: 1;
+        padding: 8px 0;
+        margin-right: 4px;
+        border-radius: 50%;
+        text-align: center;
+        width: 36px;
+        height: 36px;
+        transition: 0.3s;
+    }
+
+        #footer .social-links a:hover {
+            background: #fd5c28;
+            color: #fff;
+            text-decoration: none;
+        }
 
 /*********************by me on 8-8-2020*********************/
 
@@ -111,9 +279,11 @@ body {
         line-height: 1px;
         transition: 0.3s;
     }
-    #topbar .social-links a i{
-       font-size:18px
-    }
+
+        #topbar .social-links a i {
+            font-size: 18px
+        }
+
         #topbar .social-links a:hover {
             color: #f03c02;
         }
@@ -555,7 +725,9 @@ body {
 
 .page-section {
     width: 97vw;
-    padding: 40px
+    padding: 40px;
+    margin:20px 0px
+    
 }
 /*--------------------------------------------------------------
 # Manufacturers
@@ -663,79 +835,85 @@ body {
 /*--------------------------------------------------------------
 # Our product-list
 --------------------------------------------------------------*/
-.product-list .product-list-item {
-    margin-bottom: 20px;
-    overflow: hidden;
-    text-align: center;
-    border-radius: 5px;
-    background: #fff;
-    box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
-    width:100%
+.product-list {
+    margin-top: 50px
 }
 
-.product-list .product-list-item .product-list-item-img {
-    position: relative;
-    height:75%;
-    overflow: hidden;
-}
-
-    .product-list .product-list-item .extra-link {
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        right: 0;
-        height: 40px;
-        opacity: 0;
-        transition: ease-in-out 0.3s;
+    .product-list .product-list-item {
+        border: 1px solid #dfe1e5;
+        border-radius: 8px;
+        box-shadow: none;
+        margin-bottom: 20px;
+        overflow: hidden;
         text-align: center;
-        background: rgba(255, 255, 255, 0.85);
+        background: #fff;
+        width: 100%
     }
 
-    .product-list .product-list-item .extra-link a {
-        transition: color 0.3s;
-        color: #2b2320;
-        margin: 0 10px;
-        padding-top: 8px;
-        display: inline-block;
-    }
+        .product-list .product-list-item .product-list-item-img {
+            position: relative;
+            height: 75%;
+            overflow: hidden;
+        }
 
-    .product-list .product-list-item .extra-link a:hover {
-        color: #f03c02;
-    }
+        .product-list .product-list-item .extra-link {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            height: 40px;
+            opacity: 0;
+            transition: ease-in-out 0.3s;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.85);
+        }
 
-    .product-list .product-list-item .extra-link i {
-        font-size: 26px;
-        margin: 0 2px;
-    }
+            .product-list .product-list-item .extra-link a {
+                transition: color 0.3s;
+                color: #2b2320;
+                margin: 0 10px;
+                padding-top: 8px;
+                display: inline-block;
+            }
 
-.product-list .product-list-item .product-list-item-info {
-    padding: 25px 15px;
-}
+                .product-list .product-list-item .extra-link a:hover {
+                    color: #f03c02;
+                }
 
-    .product-list .product-list-item .product-list-item-info h4 {
-        font-weight: 700;
-        margin-bottom: 5px;
-        font-size: 18px;
-        color: #2b2320;
-    }
+            .product-list .product-list-item .extra-link i {
+                font-size: 26px;
+                margin: 0 2px;
+            }
 
-    .product-list .product-list-item .product-list-item-info span {
-        display: block;
-        font-size: 13px;
-        font-weight: 400;
-        color: #b4aca8;
-    }
+        .product-list .product-list-item .product-list-item-info {
+            padding: 5px 7px;
+            margin-bottom: 15px;
+        }
 
-    .product-list .product-list-item .product-list-item-info p {
-        font-style: italic;
-        font-size: 14px;
-        line-height: 26px;
-        color: #847872;
-    }
+            .product-list .product-list-item .product-list-item-info h4 {
+                font-weight: 700;
+                margin-bottom: 5px;
+                font-size: 18px;
+                color: #2b2320;
+            }
 
-.product-list .product-list-item:hover .extra-link {
-    opacity: 1;
-}
+            .product-list .product-list-item .product-list-item-info span {
+                display: block;
+                font-size: 13px;
+                font-weight: 400;
+                color: #b4aca8;
+            }
+
+            .product-list .product-list-item .product-list-item-info p {
+                font-style: italic;
+                font-size: 14px;
+                line-height: 26px;
+                color: #847872;
+            }
+
+        .product-list .product-list-item:hover .extra-link {
+            opacity: 1;
+        }
 
 
 .custom-product-background {
@@ -748,18 +926,295 @@ body {
     padding: 30px
 }
 
-.slickSlideri div img{
-    width:80%
+.slickSlideri div img {
+    width: 80%
 }
-.slick-track
-{
-    display:flex;
-    align-items:center
+
+.slick-track {
+    display: flex;
+    align-items: center
 }
+
 .slick-slide {
     display: flex !important;
     justify-content: center !important
 }
 
 
+/*------------------ Portfolio
+--------------------------------------------------------------*/
+#product-list {
+    min-height: 60vh
+}
 
+.product-list {
+    padding-bottom: 60px;
+}
+
+    .product-list .sub-cat-collection-item {
+        background: #1e4356;
+        overflow: hidden;
+        min-height: 200px;
+        position: relative;
+        margin: 0 0 30px 0;
+        /*width: 300px;*/
+        height: 200px;
+        border: 1px solid #dcc6c6;
+        border-radius: 10px;
+        cursor: pointer
+    }
+
+        .product-list .sub-cat-collection-item img {
+            transition: all 0.3s ease-in-out;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .product-list .sub-cat-collection-item .sub-cat-collection-info {
+            opacity: 0;
+            position: absolute;
+            transition: all .15s linear;
+            text-align: center;
+            top: 10%;
+            left: 0;
+            right: 0;
+        }
+
+            .product-list .sub-cat-collection-item .sub-cat-collection-info a {
+                text-decoration: none
+            }
+
+                .product-list .sub-cat-collection-item .sub-cat-collection-info a h3 {
+                    font-size: 22px;
+                }
+
+                .product-list .sub-cat-collection-item .sub-cat-collection-info a h3 {
+                    color: #fff;
+                    font-weight: bold;
+                }
+
+                .product-list .sub-cat-collection-item .sub-cat-collection-info a i {
+                    color: #9dc2d6;
+                    font-size: 28px;
+                }
+
+        .product-list .sub-cat-collection-item:hover img {
+            opacity: 0.4;
+            transform: scale(1.1);
+        }
+
+        .product-list .sub-cat-collection-item:hover .sub-cat-collection-info {
+            opacity: 1;
+            top: calc(50% - 30px);
+        }
+
+.no-item {
+    display: block;
+    margin: 60px auto;
+    font-size: 1.5rem;
+    color: #3434346e;
+}
+
+
+.customer-head {
+    background: #eee;
+    overflow-x: hidden;
+}
+
+.form-control-usm {
+    height: calc(1.5em + .3rem + 2px);
+    padding: .25rem .5rem;
+    font-size: .875rem;
+    line-height: 1.5;
+    border-radius: .2rem;
+}
+
+
+.accordion-item .accordion-item-header div {
+  display:flex;
+  flex-direction:row;
+  justify-content:space-between;
+  align-content:center
+}
+    .accordion-item .accordion-item-header div .accordion-item-icon {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-content: center
+    }
+.accordion-item-header-clickable
+{
+    cursor:pointer
+}
+.accordion-item .accordion-item-header div i {
+    display: flex;
+    font-size: 1rem;
+    justify-content: center;
+    align-content: center
+}
+.accordion-item .accordion-item-header div a {
+    padding-left: 0px
+}
+.accordion-item-header {
+    padding: .2rem .3rem;
+}
+.filterMenu-list
+{
+    padding:7px
+}
+.filterMenu-list-items {
+    list-style: none;
+    margin-bottom: 0px !important
+}
+
+
+
+# Contact
+--------------------------------------------------------------*/
+.contact .info-wrap {
+    box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+}
+
+.contact .info {
+    background: #fff;
+}
+
+    .contact .info i {
+        font-size: 20px;
+        color: #f03c02;
+        float: left;
+        width: 44px;
+        height: 44px;
+        background: #ffeee8;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50px;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .contact .info h4 {
+        padding: 0 0 0 60px;
+        font-size: 22px;
+        font-weight: 600;
+        margin-bottom: 5px;
+        color: #2b2320;
+    }
+
+    .contact .info p {
+        padding: 0 0 0 60px;
+        margin-bottom: 0;
+        font-size: 14px;
+        color: #65534c;
+    }
+
+    .contact .info:hover i {
+        background: #f03c02;
+        color: #fff;
+    }
+
+.contact .php-email-form {
+    width: 100%;
+    box-shadow: 0 0 24px 0 rgba(0, 0, 0, 0.12);
+    padding: 30px;
+    background: #fff;
+}
+
+    .contact .php-email-form .form-group {
+        padding-bottom: 8px;
+    }
+
+    .contact .php-email-form .validate {
+        display: none;
+        color: red;
+        margin: 0 0 15px 0;
+        font-weight: 400;
+        font-size: 13px;
+    }
+
+    .contact .php-email-form .error-message {
+        display: none;
+        color: #fff;
+        background: #ed3c0d;
+        text-align: center;
+        padding: 15px;
+        font-weight: 600;
+    }
+
+    .contact .php-email-form .sent-message {
+        display: none;
+        color: #fff;
+        background: #18d26e;
+        text-align: center;
+        padding: 15px;
+        font-weight: 600;
+    }
+
+    .contact .php-email-form .loading {
+        display: none;
+        background: #fff;
+        text-align: center;
+        padding: 15px;
+    }
+
+        .contact .php-email-form .loading:before {
+            content: "";
+            display: inline-block;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            margin: 0 10px -6px 0;
+            border: 3px solid #18d26e;
+            border-top-color: #eee;
+            -webkit-animation: animate-loading 1s linear infinite;
+            animation: animate-loading 1s linear infinite;
+        }
+
+    .contact .php-email-form input, .contact .php-email-form textarea {
+        border-radius: 0;
+        box-shadow: none;
+        font-size: 14px;
+    }
+
+    .contact .php-email-form input {
+        height: 44px;
+    }
+
+    .contact .php-email-form textarea {
+        padding: 10px 12px;
+    }
+
+    .contact .php-email-form button[type="submit"] {
+        background: #f03c02;
+        border: 0;
+        padding: 10px 24px;
+        color: #fff;
+        transition: 0.4s;
+        border-radius: 4px;
+    }
+
+        .contact .php-email-form button[type="submit"]:hover {
+            background: #fd5c28;
+        }
+
+@-webkit-keyframes animate-loading {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes animate-loading {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}

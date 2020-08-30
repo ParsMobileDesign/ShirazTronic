@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -165,8 +166,8 @@ namespace ShirazTronic.Models
         public decimal Price { get; set; }
 
         public ICollection<ProductCategory> Categories { get; set; }
-        public ICollection<ProductImage> Images { get; set; }
-        public ICollection<ProductSpecification> Specifications { get; set; }
+        public IEnumerable<ProductImage> Images { get; set; }
+        public ICollection<ProductSpecification> ProductSpecification { get; set; }
     }
 
     public class ProductImage
@@ -228,4 +229,26 @@ namespace ShirazTronic.Models
         public virtual Product Product { get; set; }
     }
     #endregion
+
+    public class ShoppingCart
+    {
+        public ShoppingCart()
+        {
+            Count = 1;
+        }
+        public int Id { get; set; }
+
+        public string AppUserId { get; set; }
+        [NotMapped]
+        [ForeignKey("AppUserId")]
+        public virtual AppUser AppUser { get; set; }
+
+        public int ProductId { get; set; }
+        [NotMapped]
+        [ForeignKey("ProductId")]
+        public virtual Product Product{ get; set; }
+
+        [Range(1,short.MaxValue,ErrorMessage ="Count should be at least 1")]
+        public short Count { get; set; }
+    }
 }

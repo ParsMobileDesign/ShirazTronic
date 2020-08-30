@@ -1,157 +1,32 @@
 ﻿@model IEnumerable<Category>
 <nav class="nav-menu d-none d-lg-block">
     <ul>
+        <li><a asp-action="Index" asp-controller="Home" asp-area="Customer">Home</a></li>
         <li class="drop-down">
-            <a href="">Products</a>
+            <a>Products</a>
             <ul>
                 @foreach (var item in Model)
                 {
                     <li class="drop-down">
-                        <a href="#">@item.Title</a>
+                        <a asp-area="Customer" asp-controller="Product" asp-action="Index" asp-route-catId="@item.Id">@item.Title</a>
                         <ul>
                             @foreach (var sub in item.SubCategories)
                             {
-                                <li><a class='item-selected' asp-area="Customer" asp-controller="Product" asp-action="Index" asp-route-id="@sub.Id">@sub.Title</a></li>
+                                <li><a class='item-selected' asp-area="Customer" asp-controller="Product" asp-action="Index" asp-route-subCatid="@sub.Id">@sub.Title</a></li>
                             }
-                            @*<li><a class='item-selected' asp-area="Customer" asp-controller="Product" asp-action="Index" asp-route-id="0">Encoders</a></li>
-                            <li><a class='item-selected' asp-area="Customer" asp-controller="Product" asp-action="Index" asp-route-id="1">I/O Modules</a></li>
-                            <li><a class='item-selected' asp-area="Customer" asp-controller="Product" asp-action="Index" asp-route-id="2">Industrial Automation</a></li>
-                            <li><a class='item-selected' asp-area="Customer" asp-controller="Product" asp-action="Index" asp-route-id="3">Motors Drives</a></li>
-                            <li><a class='item-selected' asp-area="Customer" asp-controller="Product" asp-action="Index" asp-route-id="4">Printers</a></li>*@
                         </ul>
                     </li>
                 }
-                @*<li class="drop-down">
-                    <a href="#">Circuit Protection</a>
-                    <ul>
-                        <li><a class='item-selected' asp-area="Customer" asp-controller="Product" asp-action="Index" asp-route-id="0">Encoders</a></li>
-                        <li><a class='item-selected' asp-area="Customer" asp-controller="Product" asp-action="Index" asp-route-id="1">I/O Modules</a></li>
-                        <li><a class='item-selected' asp-area="Customer" asp-controller="Product" asp-action="Index" asp-route-id="2">Industrial Automation</a></li>
-                        <li><a class='item-selected' asp-area="Customer" asp-controller="Product" asp-action="Index" asp-route-id="3">Motors Drives</a></li>
-                        <li><a class='item-selected' asp-area="Customer" asp-controller="Product" asp-action="Index" asp-route-id="4">Printers</a></li>
-                    </ul>
-                </li>
-                <li class="drop-down">
-                    <a href="#">Connectors</a>
-                    <ul>
-                        <li><a href="#">Audio Devices</a></li>
-                        <li><a class='item-selected' href="#">Encoders</a></li>
-                        <li><a class='item-selected' href="#">Hardware</a></li>
-                        <li><a class='item-selected' href="#">I/O Modules</a></li>
-                        <li><a class='item-selected' href="#">Industrial Automation</a></li>
-                        <li><a class='item-selected' href="#">Motors Drives</a></li>
-                        <li><a class='item-selected' href="#">Printers</a></li>
-                    </ul>
-                </li>
-                <li class="drop-down">
-                    <a href="#">Electromechanical</a>
-                    <ul>
-                        <li><a href="#">Audio Devices</a></li>
-
-                        <li><a href="#">Encoders</a></li>
-                        <li><a href="#">Hardware</a></li>
-                        <li><a href="#">I/O Modules</a></li>
-                        <li><a href="#">Industrial Automation</a></li>
-                        <li><a href="#">Motors Drives</a></li>
-                        <li><a href="#">Printers</a></li>
-                        <li><a href="#">Audio Devices</a></li>
-
-                        <li><a href="#">Encoders</a></li>
-                        <li><a href="#">Hardware</a></li>
-                        <li><a href="#">I/O Modules</a></li>
-                        <li><a href="#">Industrial Automation</a></li>
-                        <li><a href="#">Motors Drives</a></li>
-                        <li><a href="#">Printers</a></li>
-                    </ul>
-                </li>
-                <li class="drop-down">
-                    <a href="#">
-                        Embedded Solutions
-                    </a>
-                    <ul>
-                        <li><a href="#">I/O Modules</a></li>
-                        <li><a href="#">Industrial Automation</a></li>
-                        <li><a href="#">Motors Drives</a></li>
-                        <li><a href="#">Printers</a></li>
-                        <li><a href="#">I/O Modules</a></li>
-                        <li><a href="#">Industrial Automation</a></li>
-                        <li><a href="#">Motors Drives</a></li>
-                        <li><a href="#">Printers</a></li>
-
-                    </ul>
-                </li>
-                <li class="drop-down">
-                    <a href="#">Enclosures</a>
-                    <ul>
-                        <li><a href="#">Motors Drives</a></li>
-                        <li><a href="#">Printers</a></li>
-                        <li><a href="#">I/O Modules</a></li>
-                        <li><a href="#">Industrial Automation</a></li>
-
-                    </ul>
-                </li>
-                <li class="drop-down">
-                    <a href="#">
-                        Engineering Tools
-                    </a>
-                    <ul>
-
-                        <li><a href="#">Encoders</a></li>
-                        <li><a href="#">Hardware</a></li>
-                        <li><a href="#">I/O Modules</a></li>
-                        <li><a href="#">Industrial Automation</a></li>
-                        <li><a href="#">Motors Drives</a></li>
-                        <li><a href="#">Printers</a></li>
-                    </ul>
-                </li>
-                <li class="drop-down">
-                    <a href="#">
-                        Industrial Automation
-                    </a>
-                    <ul>
-                        <li><a href="#">Industrial Automation</a></li>
-                        <li><a href="#">Motors Drives</a></li>
-                        <li><a href="#">Printers</a></li>
-                    </ul>
-                </li>
-                <li class="drop-down">
-                    <a href="#">
-                        LED Lighting
-                    </a>
-                    <ul>
-
-                        <li><a href="#">Printers</a></li>
-                    </ul>
-                </li>
-                <li class="drop-down">
-                    <a href="#">
-                        Passive Components
-                    </a>
-                    <ul>
-                        <li><a href="#">Industrial Automation</a></li>
-                        <li><a href="#">Motors Drives</a></li>
-                        <li><a href="#">Printers</a></li>
-                    </ul>
-                </li>
-                <li class="drop-down">
-                    <a href="#">Power</a>
-                    <ul>
-                        <li><a href="#">Encoders</a></li>
-                        <li><a href="#">Hardware</a></li>
-                        <li><a href="#">I/O Modules</a></li>
-                        <li><a href="#">Industrial Automation</a></li>
-                        <li><a href="#">Motors Drives</a></li>
-                        <li><a href="#">Printers</a></li>
-                    </ul>
-                </li>*@
-
             </ul>
         </li>
-        <li><a asp-action="Index" asp-controller="Home" asp-area="Customer">Home</a></li>
-        <li><a asp-action="Index" asp-controller="Home" asp-area="Admin">Admin Home</a></li>
-        <li><a>Contact</a></li>
-        @*<li>
+        @if (User.IsInRole(Utility.ManagerUser))
+        {
+            <li><a asp-action="Index" asp-controller="Home" asp-area="Admin">Admin Home</a></li>
+        }
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="#about-us">About Us</a></li>
+        <li>
             <partial name="_LoginPartial" />
-        </li>*@
+        </li>
     </ul>
 </nav>

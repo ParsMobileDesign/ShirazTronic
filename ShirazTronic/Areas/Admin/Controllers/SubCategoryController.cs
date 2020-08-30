@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -15,6 +16,7 @@ using ShirazTronic.Models.ViewModels;
 namespace ShirazTronic.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = Utility.ManagerUser)]
     public class SubCategoryController : Controller
     {
         ApplicationDbContext db;
@@ -38,25 +40,37 @@ namespace ShirazTronic.Areas.Admin.Controllers
                 // subCategoryList = await db.SubCategory.OrderBy(p => p.Title).Select(p => p.Title).Distinct().ToListAsync()
             };
 
-            return View(subCategoryAndCategory);
+            return View("Edit",subCategoryAndCategory);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(List<IFormFile> Picture,VmSubcategoryAndCategory model)
+        public IActionResult Save(List<IFormFile> Picture, VmSubcategoryAndCategory model)
         {
             if (ModelState.IsValid)
             {
-                var isExistSubCat = db.SubCategory.Include(s => s.Category).Where(s => s.Title == model.SubCategory.Title && s.Category.Id == model.SubCategory.CategoryId);
-                if (isExistSubCat.Count() > 0)
-                    tempMessage = "Subcategory already exists";
+                IEnumerable<SubCategory> isExistSubCat = null;
+                if (model.SubCategory.Id == 0) // run when object is new 
+                    isExistSubCat = db.SubCategory.Include(s => s.Category).Where(s => s.Title == model.SubCategory.Title && s.Category.Id == model.SubCategory.CategoryId);
+                if (isExistSubCat != null && isExistSubCat.Count() > 0)
+                {
+                    if (isExistSubCat.Count() > 0)
+                        tempMessage = "Subcategory already exists";
+                }
                 else
                 {
                     using (var ms = new MemoryStream())
                     {
-                        Picture[0].CopyTo(ms);
-                        model.SubCategory.Picture = ms.ToArray();
+                        if (Picture.Count > 0)
+                        {
+                            Picture[0].CopyTo(ms);
+                            model.SubCategory.Picture = ms.ToArray();
+                        }
+
                     }
-                    db.SubCategory.Add(model.SubCategory);
+                    if (model.SubCategory.Id == 0)
+                        db.SubCategory.Add(model.SubCategory);
+                    else
+                        db.SubCategory.Update(model.SubCategory);
                     db.SaveChanges();
                     return RedirectToAction(nameof(Index));
                 }
@@ -69,7 +83,7 @@ namespace ShirazTronic.Areas.Admin.Controllers
                 statusMessage = tempMessage,
                 //subCategoryList = db.SubCategory.OrderBy(p => p.Title).Select(s => s.Title).ToList()
             };
-            return View(tempModel);
+            return View("Edit", tempModel);
         }
 
         public IActionResult Delete(int id)
@@ -97,28 +111,36 @@ namespace ShirazTronic.Areas.Admin.Controllers
 
             return View(subCategoryAndCategory);
         }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, VmSubcategoryAndCategory model)
-        {
-            if (ModelState.IsValid)
-            {
-                var subCatinDB = db.SubCategory.SingleOrDefault(s => s.Id == id);
-                subCatinDB.Title = model.SubCategory.Title;
-                subCatinDB.Picture = model.SubCategory.Picture;
-                db.SaveChanges();
-                return RedirectToAction(nameof(Index));
-            }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public IActionResult Edit(int id, VmSubcategoryAndCategory model, List<IFormFile> Picture)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        var subCatinDB = db.SubCategory.SingleOrDefault(s => s.Id == id);
+        //        using (var ms = new MemoryStream())
+        //        {
+        //            if (Picture.Count > 0)
+        //            {
+        //                Picture[0].CopyTo(ms);
+        //                subCatinDB.Picture = ms.ToArray();
+        //            }
 
-            VmSubcategoryAndCategory tempModel = new VmSubcategoryAndCategory()
-            {
-                Categories = db.Category.ToList(),
-                SubCategory = model.SubCategory,
-                statusMessage = "Subcategory already exists",
-                //subCategoryList = db.SubCategory.OrderBy(p => p.Title).Select(s => s.Title).ToList()
-            };
-            return View(tempModel);
-        }
+        //        }
+        //        subCatinDB.Title = model.SubCategory.Title;
+        //        db.SaveChanges();
+        //        return RedirectToAction(nameof(Index));
+        //    }
+
+        //    VmSubcategoryAndCategory tempModel = new VmSubcategoryAndCategory()
+        //    {
+        //        Categories = db.Category.ToList(),
+        //        SubCategory = model.SubCategory,
+        //        statusMessage = "Subcategory already exists",
+        //        //subCategoryList = db.SubCategory.OrderBy(p => p.Title).Select(s => s.Title).ToList()
+        //    };
+        //    return View(tempModel);
+        //}
 
         [ActionName("GetSubCategory")]
         public IActionResult GetSubCategory(int id)

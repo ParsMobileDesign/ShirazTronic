@@ -1,347 +1,56 @@
-﻿
+﻿@model Product
 @{
     ViewData["Title"] = "SelectedProduct";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-    
+
 <div class="custom-product-background" style="background-color:white">
     <div style="width:80%">
-        <div class="row">
-            <div class="col-lg-6 col-md-6" style="padding:50px">
+        <div class="form-group row">
+            <div class="col-lg-6 col-md-6" style="padding: 0px 65px">
                 <div class="slickSlideri">
-                    <div><img src="~/image/tempProducts/1.jpg" /></div>
-                    <div><img src="~/image/tempProducts/2.jpg" /></div>
-                    <div><img src="~/image/tempProducts/3.jpg" /></div>
+                    @foreach (var image in Model.Images)
+                    {
+                        <div><img src="@image.ImageAddr" /></div>
+                    }
                 </div>
             </div>
-            <div class="col-lg-6 col-md-6">
-                <h2>Transistor (in Stock:10)</h2>
-                <p>
+            <div class="col-lg-6 col-md-6 d-flex flex-column justify-content-start">
+                <div>
+                    <h2>@Model.Title (in Stock: @Model.StockQuantity)</h2>
                     <ul>
-                        <li>1-Lorem ipsum, or lipsum as it is s</li>
-                        <li>1-sometimes known, is dummy text used in l</li>
-                        <li>1-he passage is </li>
-                        <li>1-have scrambled parts</li>
-                        <li>1-Cicero's De Finibus Bonorum</li>
-                        <li>1-Malorum for use i</li>
+                        @foreach (var spec in Model.ProductSpecification)
+                        {
+                        <li><h6> @spec.SpecificationValue.Specification.Title :<i> @spec.SpecificationValue.Value</i></h6></li>
+                        }
+                       
                     </ul>
-                </p>
-                <a class="btn btn-info text-white"><i class="fas fa-cart-plus"></i> ADD TO CART</a>
+                </div>
+                <div>
+                    <a class="btn btn-info text-white"><i class="fas fa-cart-plus"></i> ADD TO CART</a>
+                    <a class="btn btn-success text-white"><i class="fas fa-bell"></i> Notify Me</a>
+                </div>
             </div>
         </div>
-        <div class="row">
+        <div class="form-group row">
             <div class="col-lg-6 col-md-6">
-                <table class="table table-bordered" >
+                <table class="table table-bordered">
                     <tbody>
                         <tr>
-                            <th scope="col" class="attr-col">Product Attribute</th>
-                            <th scope="col" class="attr-value-col">Attribute Value</th>
-                            <th scope="col" class="text-center checkbox-col ">Search Similar</th>
+                            <th scope="col" class="attr-col">Specification</th>
+                            <th scope="col" class="attr-value-col">Value</th>
                         </tr>
-
-
-                        <tr id="pdp_specs_SpecList[0]">
-                            <td class="attr-col">
-                                <label for="SpecList_chkbox_4292733690">Manufacturer:</label>
-                                <input id="SpecList_0__Label" name="SpecList[0].Label" type="hidden" value="Manufacturer:">            <input data-val="true" data-val-number="The field LabelId must be a number." data-val-required="The LabelId field is required." id="SpecList_0__LabelId" name="SpecList[0].LabelId" type="hidden" value="1000000411">
-                            </td>
-                            <td class="attr-value-col">
-                                TE Connectivity            <input id="SpecList_0__Value" name="SpecList[0].Value" type="hidden" value="TE Connectivity"><input data-val="true" data-val-number="The field ValueId must be a number." data-val-required="The ValueId field is required." id="SpecList_0__ValueId" name="SpecList[0].ValueId" type="hidden" value="4292733690">
-                            </td>
-                            <td class="text-center checkbox-col ">
-                                <input aria-label="Manufacturer: TE Connectivity" attrgrpname="Manufacturer" class="find-similar" data-val="true" data-val-required="The Selected field is required." id="SpecList_chkbox_4292733690" labelid="1000000411" name="SpecList[0].Selected" type="checkbox" value="true" valueid="4292733690"><input name="SpecList[0].Selected" type="hidden" value="false">
-                            </td>
-                        </tr>
-
-
-                        <tr id="pdp_specs_SpecList[1]">
-                            <td class="attr-col">
-                                <label for="SpecList_chkbox_18360637">Product Category:</label>
-                                <input id="SpecList_1__Label" name="SpecList[1].Label" type="hidden" value="Product Category:">            <input data-val="true" data-val-number="The field LabelId must be a number." data-val-required="The LabelId field is required." id="SpecList_1__LabelId" name="SpecList[1].LabelId" type="hidden" value="1000000410">
-                            </td>
-                            <td class="attr-value-col">
-                                High Speed/Modular Connectors            <input id="SpecList_1__Value" name="SpecList[1].Value" type="hidden" value="High Speed/Modular Connectors"><input data-val="true" data-val-number="The field ValueId must be a number." data-val-required="The ValueId field is required." id="SpecList_1__ValueId" name="SpecList[1].ValueId" type="hidden" value="18360637">
-                            </td>
-                            <td class="text-center checkbox-col ">
-                                <input aria-label="Product Category: High Speed/Modular Connectors" attrgrpname="High Speed / Modular Connectors" checked="checked" class="find-similar" data-val="true" data-val-required="The Selected field is required." id="SpecList_chkbox_18360637" labelid="1000000410" name="SpecList[1].Selected" type="checkbox" value="true" valueid="18360637"><input name="SpecList[1].Selected" type="hidden" value="false">
-                            </td>
-                        </tr>
-
-
-                        <tr id="pdp_specs_SpecList[2]">
-                            <td class="attr-col">
-                                RoHS:<input id="SpecList_2__Label" name="SpecList[2].Label" type="hidden" value="RoHS:">            <input data-val="true" data-val-number="The field LabelId must be a number." data-val-required="The LabelId field is required." id="SpecList_2__LabelId" name="SpecList[2].LabelId" type="hidden" value="1000000290">
-                            </td>
-                            <td class="attr-value-col">
-                                <i class="fa fa-2x fa-m-rohs rohsIconGreen" alt="RoHS Compliant"></i>&nbsp;<a id="rohsCompliantPopupLink" class="spec-rohs" href="/Search/RoHSCompliant?qs=bZSaauq50vbgbNqBv0zVEQ%3d%3d" rel="nofollow" target="_blank" onclick="javascript:OpenModal(&quot;/Search/RoHSCompliant?qs=bZSaauq50vbgbNqBv0zVEQ%3d%3d&quot;);return false;" aria-label="More details about the Restriction of Hazardous Substances.">Details</a>            <input id="SpecList_2__Value" name="SpecList[2].Value" type="hidden" value="Y"><input data-val="true" data-val-number="The field ValueId must be a number." data-val-required="The ValueId field is required." id="SpecList_2__ValueId" name="SpecList[2].ValueId" type="hidden" value="4294783019">
-                            </td>
-                            <td class="text-center checkbox-col ">
-                            </td>
-                        </tr>
-
-
-                        <tr id="pdp_specs_SpecList[3]">
-                            <td class="attr-col">
-                                <label for="SpecList_chkbox_4294438217">Product:</label>
-                                <input id="SpecList_3__Label" name="SpecList[3].Label" type="hidden" value="Product:">            <input data-val="true" data-val-number="The field LabelId must be a number." data-val-required="The LabelId field is required." id="SpecList_3__LabelId" name="SpecList[3].LabelId" type="hidden" value="688640">
-                            </td>
-                            <td class="attr-value-col">
-                                Headers            <input id="SpecList_3__Value" name="SpecList[3].Value" type="hidden" value="Headers"><input data-val="true" data-val-number="The field ValueId must be a number." data-val-required="The ValueId field is required." id="SpecList_3__ValueId" name="SpecList[3].ValueId" type="hidden" value="4294438217">
-                            </td>
-                            <td class="text-center checkbox-col ">
-                                <input aria-label="Product: Headers" attrgrpname="Product" class="find-similar" data-val="true" data-val-required="The Selected field is required." id="SpecList_chkbox_4294438217" labelid="688640" name="SpecList[3].Selected" type="checkbox" value="true" valueid="4294438217"><input name="SpecList[3].Selected" type="hidden" value="false">
-                            </td>
-                        </tr>
-
-
-                        <tr id="pdp_specs_SpecList[4]">
-                            <td class="attr-col">
-                                <label for="SpecList_chkbox_4282024257">Number of Positions:</label>
-                                <input id="SpecList_4__Label" name="SpecList[4].Label" type="hidden" value="Number of Positions:">            <input data-val="true" data-val-number="The field LabelId must be a number." data-val-required="The LabelId field is required." id="SpecList_4__LabelId" name="SpecList[4].LabelId" type="hidden" value="688555">
-                            </td>
-                            <td class="attr-value-col">
-                                32 Position            <input id="SpecList_4__Value" name="SpecList[4].Value" type="hidden" value="32 Position"><input data-val="true" data-val-number="The field ValueId must be a number." data-val-required="The ValueId field is required." id="SpecList_4__ValueId" name="SpecList[4].ValueId" type="hidden" value="4282024257">
-                            </td>
-                            <td class="text-center checkbox-col ">
-                                <input aria-label="Number of Positions: 32 Position" attrgrpname="Number of Positions" class="find-similar" data-val="true" data-val-required="The Selected field is required." id="SpecList_chkbox_4282024257" labelid="688555" name="SpecList[4].Selected" type="checkbox" value="true" valueid="4282024257"><input name="SpecList[4].Selected" type="hidden" value="false">
-                            </td>
-                        </tr>
-
-
-                        <tr id="pdp_specs_SpecList[5]">
-                            <td class="attr-col">
-                                <label for="SpecList_chkbox_4282184581">Number of Rows:</label>
-                                <input id="SpecList_5__Label" name="SpecList[5].Label" type="hidden" value="Number of Rows:">            <input data-val="true" data-val-number="The field LabelId must be a number." data-val-required="The LabelId field is required." id="SpecList_5__LabelId" name="SpecList[5].LabelId" type="hidden" value="688557">
-                            </td>
-                            <td class="attr-value-col">
-                                4 Row            <input id="SpecList_5__Value" name="SpecList[5].Value" type="hidden" value="4 Row"><input data-val="true" data-val-number="The field ValueId must be a number." data-val-required="The ValueId field is required." id="SpecList_5__ValueId" name="SpecList[5].ValueId" type="hidden" value="4282184581">
-                            </td>
-                            <td class="text-center checkbox-col ">
-                                <input aria-label="Number of Rows: 4 Row" attrgrpname="Number of Rows" class="find-similar" data-val="true" data-val-required="The Selected field is required." id="SpecList_chkbox_4282184581" labelid="688557" name="SpecList[5].Selected" type="checkbox" value="true" valueid="4282184581"><input name="SpecList[5].Selected" type="hidden" value="false">
-                            </td>
-                        </tr>
-
-
-                        <tr id="pdp_specs_SpecList[6]">
-                            <td class="attr-col">
-                                <label for="SpecList_chkbox_4294631563">Pitch:</label>
-                                <input id="SpecList_6__Label" name="SpecList[6].Label" type="hidden" value="Pitch:">            <input data-val="true" data-val-number="The field LabelId must be a number." data-val-required="The LabelId field is required." id="SpecList_6__LabelId" name="SpecList[6].LabelId" type="hidden" value="1826908">
-                            </td>
-                            <td class="attr-value-col">
-                                3.9 mm            <input id="SpecList_6__Value" name="SpecList[6].Value" type="hidden" value="3.9 mm"><input data-val="true" data-val-number="The field ValueId must be a number." data-val-required="The ValueId field is required." id="SpecList_6__ValueId" name="SpecList[6].ValueId" type="hidden" value="4294631563">
-                            </td>
-                            <td class="text-center checkbox-col ">
-                                <input aria-label="Pitch: 3.9 mm" attrgrpname="Pitch" class="find-similar" data-val="true" data-val-required="The Selected field is required." id="SpecList_chkbox_4294631563" labelid="1826908" name="SpecList[6].Selected" type="checkbox" value="true" valueid="4294631563"><input name="SpecList[6].Selected" type="hidden" value="false">
-                            </td>
-                        </tr>
-
-
-                        <tr id="pdp_specs_SpecList[7]">
-                            <td class="attr-col">
-                                <label for="SpecList_chkbox_4294651709">Termination Style:</label>
-                                <input id="SpecList_7__Label" name="SpecList[7].Label" type="hidden" value="Termination Style:">            <input data-val="true" data-val-number="The field LabelId must be a number." data-val-required="The LabelId field is required." id="SpecList_7__LabelId" name="SpecList[7].LabelId" type="hidden" value="688737">
-                            </td>
-                            <td class="attr-value-col">
-                                Press-fit            <input id="SpecList_7__Value" name="SpecList[7].Value" type="hidden" value="Press-fit"><input data-val="true" data-val-number="The field ValueId must be a number." data-val-required="The ValueId field is required." id="SpecList_7__ValueId" name="SpecList[7].ValueId" type="hidden" value="4294651709">
-                            </td>
-                            <td class="text-center checkbox-col ">
-                                <input aria-label="Termination Style: Press-fit" attrgrpname="Termination Style" class="find-similar" data-val="true" data-val-required="The Selected field is required." id="SpecList_chkbox_4294651709" labelid="688737" name="SpecList[7].Selected" type="checkbox" value="true" valueid="4294651709"><input name="SpecList[7].Selected" type="hidden" value="false">
-                            </td>
-                        </tr>
-
-
-                        <tr id="pdp_specs_SpecList[8]">
-                            <td class="attr-col">
-                                <label for="SpecList_chkbox_4294734200">Contact Plating:</label>
-                                <input id="SpecList_8__Label" name="SpecList[8].Label" type="hidden" value="Contact Plating:">            <input data-val="true" data-val-number="The field LabelId must be a number." data-val-required="The LabelId field is required." id="SpecList_8__LabelId" name="SpecList[8].LabelId" type="hidden" value="688354">
-                            </td>
-                            <td class="attr-value-col">
-                                Tin            <input id="SpecList_8__Value" name="SpecList[8].Value" type="hidden" value="Tin"><input data-val="true" data-val-number="The field ValueId must be a number." data-val-required="The ValueId field is required." id="SpecList_8__ValueId" name="SpecList[8].ValueId" type="hidden" value="4294734200">
-                            </td>
-                            <td class="text-center checkbox-col ">
-                                <input aria-label="Contact Plating: Tin" attrgrpname="Contact Plating" class="find-similar" data-val="true" data-val-required="The Selected field is required." id="SpecList_chkbox_4294734200" labelid="688354" name="SpecList[8].Selected" type="checkbox" value="true" valueid="4294734200"><input name="SpecList[8].Selected" type="hidden" value="false">
-                            </td>
-                        </tr>
-
-
-                        <tr id="pdp_specs_SpecList[9]">
-                            <td class="attr-col">
-                                Current Rating:<input id="SpecList_9__Label" name="SpecList[9].Label" type="hidden" value="Current Rating:">            <input data-val="true" data-val-number="The field LabelId must be a number." data-val-required="The LabelId field is required." id="SpecList_9__LabelId" name="SpecList[9].LabelId" type="hidden" value="688370">
-                            </td>
-                            <td class="attr-value-col">
-                                0.5 A            <input id="SpecList_9__Value" name="SpecList[9].Value" type="hidden" value="0.5 A"><input data-val="true" data-val-number="The field ValueId must be a number." data-val-required="The ValueId field is required." id="SpecList_9__ValueId" name="SpecList[9].ValueId" type="hidden" value="4294648567">
-                            </td>
-                            <td class="text-center checkbox-col ">
-                            </td>
-                        </tr>
-
-
-                        <tr id="pdp_specs_SpecList[10]">
-                            <td class="attr-col">
-                                Housing Material:<input id="SpecList_10__Label" name="SpecList[10].Label" type="hidden" value="Housing Material:">            <input data-val="true" data-val-number="The field LabelId must be a number." data-val-required="The LabelId field is required." id="SpecList_10__LabelId" name="SpecList[10].LabelId" type="hidden" value="688451">
-                            </td>
-                            <td class="attr-value-col">
-                                Thermoplastic (TP)            <input id="SpecList_10__Value" name="SpecList[10].Value" type="hidden" value="Thermoplastic (TP)"><input data-val="true" data-val-number="The field ValueId must be a number." data-val-required="The ValueId field is required." id="SpecList_10__ValueId" name="SpecList[10].ValueId" type="hidden" value="4248637105">
-                            </td>
-                            <td class="text-center checkbox-col ">
-                            </td>
-                        </tr>
-
-
-                        <tr id="pdp_specs_SpecList[11]">
-                            <td class="attr-col">
-                                Mounting Angle:<input id="SpecList_11__Label" name="SpecList[11].Label" type="hidden" value="Mounting Angle:">            <input data-val="true" data-val-number="The field LabelId must be a number." data-val-required="The LabelId field is required." id="SpecList_11__LabelId" name="SpecList[11].LabelId" type="hidden" value="688533">
-                            </td>
-                            <td class="attr-value-col">
-                                Vertical            <input id="SpecList_11__Value" name="SpecList[11].Value" type="hidden" value="Vertical"><input data-val="true" data-val-number="The field ValueId must be a number." data-val-required="The ValueId field is required." id="SpecList_11__ValueId" name="SpecList[11].ValueId" type="hidden" value="4294653631">
-                            </td>
-                            <td class="text-center checkbox-col ">
-                            </td>
-                        </tr>
-
-
-                        <tr id="pdp_specs_SpecList[12]">
-                            <td class="attr-col">
-                                Orientation:<input id="SpecList_12__Label" name="SpecList[12].Label" type="hidden" value="Orientation:">            <input data-val="true" data-val-number="The field LabelId must be a number." data-val-required="The LabelId field is required." id="SpecList_12__LabelId" name="SpecList[12].LabelId" type="hidden" value="688579">
-                            </td>
-                            <td class="attr-value-col">
-                                Straight            <input id="SpecList_12__Value" name="SpecList[12].Value" type="hidden" value="Straight"><input data-val="true" data-val-number="The field ValueId must be a number." data-val-required="The ValueId field is required." id="SpecList_12__ValueId" name="SpecList[12].ValueId" type="hidden" value="4292704697">
-                            </td>
-                            <td class="text-center checkbox-col ">
-                            </td>
-                        </tr>
-
-
-                        <tr id="pdp_specs_SpecList[13]">
-                            <td class="attr-col">
-                                Voltage Rating:<input id="SpecList_13__Label" name="SpecList[13].Label" type="hidden" value="Voltage Rating:">            <input data-val="true" data-val-number="The field LabelId must be a number." data-val-required="The LabelId field is required." id="SpecList_13__LabelId" name="SpecList[13].LabelId" type="hidden" value="688769">
-                            </td>
-                            <td class="attr-value-col">
-                                80 VAC            <input id="SpecList_13__Value" name="SpecList[13].Value" type="hidden" value="80 VAC"><input data-val="true" data-val-number="The field ValueId must be a number." data-val-required="The ValueId field is required." id="SpecList_13__ValueId" name="SpecList[13].ValueId" type="hidden" value="4294577781">
-                            </td>
-                            <td class="text-center checkbox-col ">
-                            </td>
-                        </tr>
-
-
-                        <tr id="pdp_specs_SpecList[14]">
-                            <td class="attr-col">
-                                Brand:<input id="SpecList_14__Label" name="SpecList[14].Label" type="hidden" value="Brand:">            <input data-val="true" data-val-number="The field LabelId must be a number." data-val-required="The LabelId field is required." id="SpecList_14__LabelId" name="SpecList[14].LabelId" type="hidden" value="1447464">
-                            </td>
-                            <td class="attr-value-col">
-                                TE Connectivity            <input id="SpecList_14__Value" name="SpecList[14].Value" type="hidden" value="TE Connectivity"><input data-val="true" data-val-number="The field ValueId must be a number." data-val-required="The ValueId field is required." id="SpecList_14__ValueId" name="SpecList[14].ValueId" type="hidden" value="4292733689">
-                            </td>
-                            <td class="text-center checkbox-col ">
-                            </td>
-                        </tr>
-
-
-                        <tr id="pdp_specs_SpecList[15]">
-                            <td class="attr-col">
-                                Contact Material:<input id="SpecList_15__Label" name="SpecList[15].Label" type="hidden" value="Contact Material:">            <input data-val="true" data-val-number="The field LabelId must be a number." data-val-required="The LabelId field is required." id="SpecList_15__LabelId" name="SpecList[15].LabelId" type="hidden" value="1826930">
-                            </td>
-                            <td class="attr-value-col">
-                                Copper Alloy            <input id="SpecList_15__Value" name="SpecList[15].Value" type="hidden" value="Copper Alloy"><input data-val="true" data-val-number="The field ValueId must be a number." data-val-required="The ValueId field is required." id="SpecList_15__ValueId" name="SpecList[15].ValueId" type="hidden" value="4294734789">
-                            </td>
-                            <td class="text-center checkbox-col ">
-                            </td>
-                        </tr>
-
-
-                        <tr id="pdp_specs_SpecList[16]">
-                            <td class="attr-col">
-                                Housing Colour:<input id="SpecList_16__Label" name="SpecList[16].Label" type="hidden" value="Housing Colour:">            <input data-val="true" data-val-number="The field LabelId must be a number." data-val-required="The LabelId field is required." id="SpecList_16__LabelId" name="SpecList[16].LabelId" type="hidden" value="1000001233">
-                            </td>
-                            <td class="attr-value-col">
-                                Black            <input id="SpecList_16__Value" name="SpecList[16].Value" type="hidden" value="Black"><input data-val="true" data-val-number="The field ValueId must be a number." data-val-required="The ValueId field is required." id="SpecList_16__ValueId" name="SpecList[16].ValueId" type="hidden" value="4245997963">
-                            </td>
-                            <td class="text-center checkbox-col ">
-                            </td>
-                        </tr>
-
-
-                        <tr id="pdp_specs_SpecList[17]">
-                            <td class="attr-col">
-                                Insulation Resistance:<input id="SpecList_17__Label" name="SpecList[17].Label" type="hidden" value="Insulation Resistance:">            <input data-val="true" data-val-number="The field LabelId must be a number." data-val-required="The LabelId field is required." id="SpecList_17__LabelId" name="SpecList[17].LabelId" type="hidden" value="1000000297">
-                            </td>
-                            <td class="attr-value-col">
-                                1000 MOhms            <input id="SpecList_17__Value" name="SpecList[17].Value" type="hidden" value="1000 MOhms"><input data-val="true" data-val-number="The field ValueId must be a number." data-val-required="The ValueId field is required." id="SpecList_17__ValueId" name="SpecList[17].ValueId" type="hidden" value="4294401790">
-                            </td>
-                            <td class="text-center checkbox-col ">
-                            </td>
-                        </tr>
-
-
-                        <tr id="pdp_specs_SpecList[18]">
-                            <td class="attr-col">
-                                Maximum Operating Temperature:<input id="SpecList_18__Label" name="SpecList[18].Label" type="hidden" value="Maximum Operating Temperature:">            <input data-val="true" data-val-number="The field LabelId must be a number." data-val-required="The LabelId field is required." id="SpecList_18__LabelId" name="SpecList[18].LabelId" type="hidden" value="1000000314">
-                            </td>
-                            <td class="attr-value-col">
-                                + 105 C            <input id="SpecList_18__Value" name="SpecList[18].Value" type="hidden" value="+ 105 C"><input data-val="true" data-val-number="The field ValueId must be a number." data-val-required="The ValueId field is required." id="SpecList_18__ValueId" name="SpecList[18].ValueId" type="hidden" value="4294568129">
-                            </td>
-                            <td class="text-center checkbox-col ">
-                            </td>
-                        </tr>
-
-
-                        <tr id="pdp_specs_SpecList[19]">
-                            <td class="attr-col">
-                                Minimum Operating Temperature:<input id="SpecList_19__Label" name="SpecList[19].Label" type="hidden" value="Minimum Operating Temperature:">            <input data-val="true" data-val-number="The field LabelId must be a number." data-val-required="The LabelId field is required." id="SpecList_19__LabelId" name="SpecList[19].LabelId" type="hidden" value="1000000322">
-                            </td>
-                            <td class="attr-value-col">
-                                - 55 C            <input id="SpecList_19__Value" name="SpecList[19].Value" type="hidden" value="- 55 C"><input data-val="true" data-val-number="The field ValueId must be a number." data-val-required="The ValueId field is required." id="SpecList_19__ValueId" name="SpecList[19].ValueId" type="hidden" value="4294024761">
-                            </td>
-                            <td class="text-center checkbox-col ">
-                            </td>
-                        </tr>
-
-
-                        <tr id="pdp_specs_SpecList[20]">
-                            <td class="attr-col">
-                                Product Type:<input id="SpecList_20__Label" name="SpecList[20].Label" type="hidden" value="Product Type:">            <input data-val="true" data-val-number="The field LabelId must be a number." data-val-required="The LabelId field is required." id="SpecList_20__LabelId" name="SpecList[20].LabelId" type="hidden" value="1000000617">
-                            </td>
-                            <td class="attr-value-col">
-                                High Speed / Modular Connectors            <input id="SpecList_20__Value" name="SpecList[20].Value" type="hidden" value="High Speed / Modular Connectors"><input data-val="true" data-val-number="The field ValueId must be a number." data-val-required="The ValueId field is required." id="SpecList_20__ValueId" name="SpecList[20].ValueId" type="hidden" value="4248008721">
-                            </td>
-                            <td class="text-center checkbox-col ">
-                            </td>
-                        </tr>
-
-
-                        <tr id="pdp_specs_SpecList[21]">
-                            <td class="attr-col">
-                                <a id="factoryPackQtyPopupLink" href="/Search/include/FactoryPackQtyPopup.aspx" rel="nofollow" target="_blank">Factory Pack Quantity:</a>            <input data-val="true" data-val-number="The field LabelId must be a number." data-val-required="The LabelId field is required." id="SpecList_21__LabelId" name="SpecList[21].LabelId" type="hidden" value="1000001106">
-                            </td>
-                            <td class="attr-value-col">
-                                31            <input id="SpecList_21__Value" name="SpecList[21].Value" type="hidden" value="31"><input data-val="true" data-val-number="The field ValueId must be a number." data-val-required="The ValueId field is required." id="SpecList_21__ValueId" name="SpecList[21].ValueId" type="hidden" value="4252655717">
-                            </td>
-                            <td class="text-center checkbox-col ">
-                            </td>
-                        </tr>
-
-
-                        <tr id="pdp_specs_SpecList[22]">
-                            <td class="attr-col">
-                                Subcategory:<input id="SpecList_22__Label" name="SpecList[22].Label" type="hidden" value="Subcategory:">            <input data-val="true" data-val-number="The field LabelId must be a number." data-val-required="The LabelId field is required." id="SpecList_22__LabelId" name="SpecList[22].LabelId" type="hidden" value="1000001147">
-                            </td>
-                            <td class="attr-value-col">
-                                Backplane Connectors            <input id="SpecList_22__Value" name="SpecList[22].Value" type="hidden" value="Backplane Connectors"><input data-val="true" data-val-number="The field ValueId must be a number." data-val-required="The ValueId field is required." id="SpecList_22__ValueId" name="SpecList[22].ValueId" type="hidden" value="4248013362">
-                            </td>
-                            <td class="text-center checkbox-col ">
-                            </td>
-                        </tr>
-
-
-                        <tr id="pdp_specs_SpecList[23]">
-                            <td class="attr-col">
-                                Unit Weight:<input id="SpecList_23__Label" name="SpecList[23].Label" type="hidden" value="Unit Weight:">
-                            </td>
-                            <td class="attr-value-col">
-                                2,550 g
-                            </td>
-                            <td class="text-center checkbox-col ">
-                            </td>
-                        </tr>
+                        @foreach (var spec in Model.ProductSpecification)
+                        {
+                            <tr>
+                                <td>
+                                    @spec.SpecificationValue.Specification.Title
+                                </td>
+                                <td>
+                                    @spec.SpecificationValue.Value
+                                </td>
+                            </tr>
+                        }
 
                     </tbody>
                 </table>
@@ -431,7 +140,7 @@
                 fade: true,
                 cssEase: 'linear'
             });
-            
+
         });
 
     </script>

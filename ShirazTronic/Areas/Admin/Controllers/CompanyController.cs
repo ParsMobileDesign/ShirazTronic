@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ShirazTronic.Data;
@@ -9,6 +10,8 @@ using ShirazTronic.Models;
 namespace ShirazTronic.Areas.Admin.Controllers
 {
     [Area("Admin")]
+    [Authorize(Roles = Utility.ManagerUser)]
+
     public class CompanyController : Controller
     {
         ApplicationDbContext db;

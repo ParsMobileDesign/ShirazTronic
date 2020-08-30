@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using ShirazTronic.Models;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
@@ -23,17 +24,19 @@ namespace ShirazTronic.Areas.Identity.Pages.Account
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
-
+        private readonly RoleManager<IdentityRole> roleManager;
         public RegisterModel(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            RoleManager<IdentityRole> _roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            roleManager = _roleManager;
         }
 
         [BindProperty]
@@ -95,26 +98,68 @@ namespace ShirazTronic.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
+            string role = Request.Form["role"].ToString();
             returnUrl = returnUrl ?? Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
+                var user = new AppUser
+                {
+                    UserName = Input.Email,
+                    Email = Input.Email,
+                    FName = Input.FName,
+                    LName = Input.LName,
+                    City = Input.City,
+                    State = Input.State,
+                    PostalCode = Input.PostalCode,
+                    Address = Input.Address,
+                    PhoneNumber=Input.PhoneNumber
+                };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
+
+                    if (!await roleManager.RoleExistsAsync(Utility.ManagerUser))
+                    {
+                        await roleManager.CreateAsync(new IdentityRole(Utility.ManagerUser));
+                    }
+                    if (!await roleManager.RoleExistsAsync(Utility.ControllerUser))
+                    {
+                        await roleManager.CreateAsync(new IdentityRole(Utility.ControllerUser));
+                    }
+                    if (!await roleManager.RoleExistsAsync(Utility.CustomerUser))
+                    {
+                        await roleManager.CreateAsync(new IdentityRole(Utility.CustomerUser));
+                    }
+                    string assignedRole = "";
+                    switch (role)
+                    {
+                        case "Controller":
+                            assignedRole = Utility.ControllerUser;
+                            break;
+                        case "Manager":
+                            assignedRole = Utility.ManagerUser;
+                            break;
+                        case "Customer":
+                        default:
+                            assignedRole = "Customer";
+                            break;
+
+                    }
+
+                    await _userManager.AddToRoleAsync(user, assignedRole);
                     _logger.LogInformation("User created a new account with password.");
 
-                    var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-                    code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
-                    var callbackUrl = Url.Page(
-                        "/Account/ConfirmEmail",
-                        pageHandler: null,
-                        values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
-                        protocol: Request.Scheme);
+                    //var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    //code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+                    //var callbackUrl = Url.Page(
+                    //    "/Account/ConfirmEmail",
+                    //    pageHandler: null,
+                    //    values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
+                    //    protocol: Request.Scheme);
 
-                    await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                        $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    //await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                    //    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
@@ -122,8 +167,12 @@ namespace ShirazTronic.Areas.Identity.Pages.Account
                     }
                     else
                     {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
-                        return LocalRedirect(returnUrl);
+                        if (assignedRole == "Customer")
+                        {
+                            await _signInManager.SignInAsync(user, isPersistent: false);
+                            return LocalRedirect(returnUrl);
+                        }
+                        return RedirectToAction("Index","User",new { area="Admin"});
                     }
                 }
                 foreach (var error in result.Errors)
