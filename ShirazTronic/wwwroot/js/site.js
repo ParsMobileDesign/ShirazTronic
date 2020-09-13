@@ -1,53 +1,24 @@
-﻿/**
-* Template Name: Flattern - v2.0.0
-* Template URL: https://bootstrapmade.com/flattern-multipurpose-bootstrap-template/
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
-*/
-!(function ($) {
-    "use strict";
-
-    // Smooth scroll for the navigation menu and links with .scrollto classes
-    $(document).on('click', '.nav-menu a, .mobile-nav a, .scrollto', function (e) {
-        //if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
-        //    console.log('minus');
-
-        //    e.preventDefault();
-        //    var target = $(this.hash);
-        //    if (target.length) {
-
-        //        var scrollto = target.offset().top;
-        //        var scrolled = 20;
-
-        //        if ($('.customer-header').length) {
-        //            scrollto -= $('.customer-header').outerHeight()
-
-        //            if (!$('.customer-header').hasClass('header-scrolled')) {
-        //                scrollto += scrolled;
-        //            }
-        //        }
-        //        if ($(this).attr("href") == '.customer-header') {
-        //            scrollto = 0;
-        //        }
-        //        $('html, body').animate({
-        //            scrollTop: scrollto
-        //        }, 1500, 'easeInOutExpo');
-
-        //        if ($(this).parents('.nav-menu, .mobile-nav').length) {
-        //            $('.nav-menu .active, .mobile-nav .active').removeClass('active');
-        //            $(this).closest('li').addClass('active');
-        //        }
-
-        //        if ($('body').hasClass('mobile-nav-active')) {
-        //            $('body').removeClass('mobile-nav-active');
-        //            $('.mobile-nav-toggle i').toggleClass('icofont-navigation-menu icofont-close');
-        //            $('.mobile-nav-overly').fadeOut();
-        //        }
-        //        return false;
-        //    }
-        //}
+﻿function showLoading() {
+    $('body').loadingModal({
+        position: 'auto',
+        text: 'Loading... Please wait',
+        color: '#fff',
+        opacity: '0.7',
+        backgroundColor: '#9393e2',
+        animation: 'chasingDots'
     });
-
+}
+function hideLoading() {
+    $('body').loadingModal('hide');
+    $('body').loadingModal('destroy');
+}
+function resetPl() {
+    showLoading();
+    $('#grid').load('/Customer/Product/resetAp', function () {
+        hideLoading();
+    });
+}
+$(document).ready(function () {
     // Mobile Navigation
     if ($('.nav-menu').length) {
         var $mobile_nav = $('.nav-menu').clone().prop({
@@ -103,5 +74,50 @@
         topSpacing: 80,
         zIndex: '50'
     });
-    
-})(jQuery);
+
+
+    $('[specvalsrl]').click(function () {
+        if ($('[specvalsrl]:checked').length == 0) {
+            resetPl();
+        }
+        else {
+            var filterObj = "";
+            var filtersep = "";
+            $('[specsrl]').each(function () {
+                var obj = $(this);
+                var id = obj.attr('specsrl');
+                var childIds = "";
+                var sep = "";
+                obj.find('input[specvalsrl]').each(function () {
+
+                    if ($(this).prop("checked")) {
+                        childIds += sep + $(this).attr("specvalsrl")
+                        sep = ",";
+                    }
+                });
+                if (childIds.length > 0) {
+                    filterObj += filtersep + childIds;
+                    filtersep = "-";
+                }
+            });
+            showLoading();
+            $('#grid').load('/Customer/Product/filterAp?jsonQuery=' + filterObj, function () {
+                hideLoading();
+            });
+        }
+    });
+
+    $('[id ^= "btnAddToCart_"]').click(function () {
+         var pId = $(this).attr('id').split("_")[1];
+        $('#shoppingCart').load('/Customer/Product/AddToCart?ProductId=' + pId, function (response, status, xhr) {
+            if (status == "error") {
+                window.location="/Identity/Account/Login"
+            }
+        });
+    });
+
+
+});
+
+
+

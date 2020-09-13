@@ -11,6 +11,9 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using ShirazTronic.Data;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
 
 namespace ShirazTronic.Areas.Identity.Pages.Account
 {
@@ -20,14 +23,16 @@ namespace ShirazTronic.Areas.Identity.Pages.Account
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
+        private readonly ApplicationDbContext db;
 
         public LoginModel(SignInManager<IdentityUser> signInManager, 
             ILogger<LoginModel> logger,
-            UserManager<IdentityUser> userManager)
+            UserManager<IdentityUser> userManager,ApplicationDbContext _db)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
+            db = _db;
         }
 
         [BindProperty]
@@ -82,6 +87,9 @@ namespace ShirazTronic.Areas.Identity.Pages.Account
                 var result = await _signInManager.PasswordSignInAsync(Input.Email, Input.Password, Input.RememberMe, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
+                    var user = db.AppUser.Where(u => u.Email == Input.Email).FirstOrDefault();
+                    var count = db.ShoppingCart.Where(sc => sc.AppUserId == user.Id).Count();
+                    HttpContext.Session.SetInt32(Utility.ShoppingCartSession, count);
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }

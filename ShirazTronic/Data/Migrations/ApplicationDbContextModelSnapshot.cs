@@ -268,6 +268,85 @@ namespace ShirazTronic.Data.Migrations
                     b.ToTable("CompanyInfo");
                 });
 
+            modelBuilder.Entity("ShirazTronic.Models.MemOrder", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("AdditionalInfos")
+                        .HasColumnType("nvarchar(500)")
+                        .HasMaxLength(500);
+
+                    b.Property<string>("CuctomerPhoneNumber")
+                        .HasColumnType("nvarchar(30)")
+                        .HasMaxLength(30);
+
+                    b.Property<string>("CustomerName")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<byte>("OrderStatus")
+                        .HasColumnType("tinyint");
+
+                    b.Property<byte>("PaymentStatus")
+                        .HasColumnType("tinyint");
+
+                    b.Property<decimal>("Total")
+                        .HasColumnType("decimal(7,4)");
+
+                    b.Property<int>("TransactionId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("MemOrder");
+                });
+
+            modelBuilder.Entity("ShirazTronic.Models.MemOrderItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<short>("Count")
+                        .HasColumnType("smallint");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("MemOrderId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(7,2)");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Title")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MemOrderId");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("MemOrderItem");
+                });
+
             modelBuilder.Entity("ShirazTronic.Models.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -275,14 +354,26 @@ namespace ShirazTronic.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Brand")
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.Property<decimal>("BuyingPrice")
+                        .HasColumnType("decimal(7,2)");
+
                     b.Property<string>("FullDescription")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("NotifyQuantityBelow")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(7,4)");
+                    b.Property<string>("PartNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<DateTime>("RegDate")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("ShortDescription")
                         .HasColumnType("nvarchar(max)");
@@ -294,6 +385,9 @@ namespace ShirazTronic.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(200)")
                         .HasMaxLength(200);
+
+                    b.Property<decimal>("UnitPrice")
+                        .HasColumnType("decimal(7,2)");
 
                     b.HasKey("Id");
 
@@ -380,7 +474,8 @@ namespace ShirazTronic.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("AppUserId")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<short>("Count")
                         .HasColumnType("smallint");
@@ -389,6 +484,10 @@ namespace ShirazTronic.Data.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
+
+                    b.HasIndex("ProductId");
 
                     b.ToTable("ShoppingCart");
                 });
@@ -435,6 +534,28 @@ namespace ShirazTronic.Data.Migrations
                     b.ToTable("SpecificationValue");
                 });
 
+            modelBuilder.Entity("ShirazTronic.Models.SubCatSpecification", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("SpecificationId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SubCategoryId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SpecificationId");
+
+                    b.HasIndex("SubCategoryId");
+
+                    b.ToTable("SubCatSpecification");
+                });
+
             modelBuilder.Entity("ShirazTronic.Models.SubCategory", b =>
                 {
                     b.Property<int>("Id")
@@ -472,10 +593,12 @@ namespace ShirazTronic.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.Property<string>("LName")
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.Property<string>("PostalCode")
                         .HasColumnType("nvarchar(max)");
@@ -537,6 +660,30 @@ namespace ShirazTronic.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("ShirazTronic.Models.MemOrder", b =>
+                {
+                    b.HasOne("ShirazTronic.Models.AppUser", "AppUser")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ShirazTronic.Models.MemOrderItem", b =>
+                {
+                    b.HasOne("ShirazTronic.Models.MemOrder", "MemOrder")
+                        .WithMany("OrderItems")
+                        .HasForeignKey("MemOrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ShirazTronic.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("ShirazTronic.Models.ProductCategory", b =>
                 {
                     b.HasOne("ShirazTronic.Models.Category", "Category")
@@ -582,11 +729,41 @@ namespace ShirazTronic.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("ShirazTronic.Models.ShoppingCart", b =>
+                {
+                    b.HasOne("ShirazTronic.Models.AppUser", "AppUser")
+                        .WithMany()
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ShirazTronic.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("ShirazTronic.Models.SpecificationValue", b =>
+                {
+                    b.HasOne("ShirazTronic.Models.Specification", "Specification")
+                        .WithMany("SpecificationValues")
+                        .HasForeignKey("SpecificationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("ShirazTronic.Models.SubCatSpecification", b =>
                 {
                     b.HasOne("ShirazTronic.Models.Specification", "Specification")
                         .WithMany()
                         .HasForeignKey("SpecificationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ShirazTronic.Models.SubCategory", "SubCategory")
+                        .WithMany("SubCatSpecifications")
+                        .HasForeignKey("SubCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

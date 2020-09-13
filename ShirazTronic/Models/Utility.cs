@@ -17,6 +17,22 @@ namespace ShirazTronic
         public const string ManagerUser = "Manager";
         public const string ControllerUser = "Controller";
         public const string CustomerUser = "Customer";
+
+
+        public const string ShoppingCartSession = "shoppingCart";
+        public const string SubCategoryIdSession = "subCatId";
+
+        public const byte OrderStatus_NotSubmitted = 0;
+        public const byte OrderStatus_Submitted = 1;
+        public const byte OrderStatus_InProcess = 2;
+        public const byte OrderStatus_Ready = 3;
+        public const byte OrderStatus_Completed = 4;
+        public const byte OrderStatus_Canceled = 5;
+
+
+        public const byte PaymentStatus_Pending = 0;
+        public const byte PaymentStatus_Approved = 1;
+        public const byte PaymentStatus_Rejected = 2;
         /// <summary>
         /// Save Files based on Input and then return saved File's name
         /// </summary>
@@ -33,7 +49,6 @@ namespace ShirazTronic
         /// <returns></returns>
         public static string SaveFileThenGetFileName(IWebHostEnvironment iWebHostEnvironment,string iWWWRootDesireFolder, IFormFileCollection iFile,string fileNameTobeSaved)
         {
-            string webRootPath = iWebHostEnvironment.WebRootPath;
             string extention = ".jpg";
             var uploadPath = Path.Combine(iWebHostEnvironment.WebRootPath,"image", iWWWRootDesireFolder);
             if (iFile.Count > 0)

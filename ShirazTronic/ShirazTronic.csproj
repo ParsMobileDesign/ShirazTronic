@@ -45,12 +45,18 @@
     <Compile Remove="Data\Migrations\20200826084256_Change-Categoryporoduct-to-ProductCategory.Designer.cs" />
     <Compile Remove="Data\Migrations\20200826090853_seeding.cs" />
     <Compile Remove="Data\Migrations\20200826090853_seeding.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200908101611_tempUser.cs" />
+    <Compile Remove="Data\Migrations\20200908101611_tempUser.Designer.cs" />
+    <Compile Remove="Data\Migrations\20200908101800_ShoppingCartPrimaryKeySet.cs" />
+    <Compile Remove="Data\Migrations\20200908101800_ShoppingCartPrimaryKeySet.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="LanguageExt.Core" Version="3.4.15" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.6" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.6" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.6" />
+    <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.6" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.7">
@@ -58,6 +64,8 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
+    <PackageReference Include="QueryDesigner" Version="3.0.2" />
+    <PackageReference Include="Syncfusion.XlsIO.Net.Core" Version="18.2.0.57" />
   </ItemGroup>
 
   <ItemGroup>
@@ -73,6 +81,8 @@
     <None Include="wwwroot\lib\DataTables\Scroller-2.0.2\js\scroller.bootstrap4.min.js" />
     <None Include="wwwroot\lib\DataTables\SearchPanes-1.1.1\js\searchPanes.bootstrap4.js" />
     <None Include="wwwroot\lib\DataTables\SearchPanes-1.1.1\js\searchPanes.bootstrap4.min.js" />
+    <None Include="wwwroot\lib\jquery-loadingModal\js\jquery.loadingModal.js" />
+    <None Include="wwwroot\lib\jquery-loadingModal\js\jquery.loadingModal.min.js" />
     <None Include="wwwroot\lib\owl.carousel\LICENSE" />
     <None Include="wwwroot\lib\owl.carousel\owl.carousel.js" />
     <None Include="wwwroot\lib\owl.carousel\owl.carousel.min.js" />

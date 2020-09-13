@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using ShirazTronic.Data;
 using ShirazTronic.Extensions;
 using ShirazTronic.Models;
@@ -36,11 +38,12 @@ namespace ShirazTronic.Areas.Admin.Controllers
             var subCategoryAndCategory = new VmSubcategoryAndCategory()
             {
                 Categories = await db.Category.ToListAsync(),
+                Specifications = await db.Specification.ToListAsync(),
                 SubCategory = new SubCategory(),
                 // subCategoryList = await db.SubCategory.OrderBy(p => p.Title).Select(p => p.Title).Distinct().ToListAsync()
             };
 
-            return View("Edit",subCategoryAndCategory);
+            return View("Edit", subCategoryAndCategory);
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -106,10 +109,52 @@ namespace ShirazTronic.Areas.Admin.Controllers
             {
                 Categories = db.Category.ToList(),
                 SubCategory = subCat,
+                Specifications = db.Specification.ToList(),
+                SubCatSpecifications = db.SubCatSpecification.ToList()
                 //subCategoryList = await db.SubCategory.OrderBy(p => p.Title).Select(p => p.Title).Distinct().ToListAsync()
             };
-
             return View(subCategoryAndCategory);
+        }
+        public IActionResult AddSubCatSpec(int SubCategoryId, int SpecificationId)
+        {
+            if (SubCategoryId > 0 && SpecificationId > 0)
+            {
+                var temp = db.SubCatSpecification.FirstOrDefault(x => x.SubCategoryId == SubCategoryId && x.SpecificationId == SpecificationId);
+                if (temp == null)
+                {
+                    var subcatspec = new SubCatSpecification(SubCategoryId, SpecificationId);
+                    db.SubCatSpecification.Add(subcatspec);
+                    db.SaveChanges();
+                }
+            }
+            return serializeList(SubCategoryId);
+        }
+        public IActionResult DelSubCatSpec(int Id, int SubCatId)
+        {
+            if (Id > 0)
+            {
+                var temp = db.SubCatSpecification.FirstOrDefault(x => x.Id == Id);
+                if (temp != null)
+                {
+                    db.SubCatSpecification.Remove(temp);
+                    db.SaveChanges();
+                }
+            }
+
+            return serializeList(SubCatId);
+        }
+        private ContentResult serializeList(int iSubCatId)
+        {
+            var subCatSpec = db.SubCatSpecification.Include(e => e.Specification).Where(x => x.SubCategoryId == iSubCatId).ToList();
+            string json = "[";
+            string sep = "";
+            foreach (SubCatSpecification item in subCatSpec)
+            {
+                json += sep + JsonConvert.SerializeObject(new { id = item.Id, SubCatId = item.SubCategoryId, SpecId = item.Specification.Id, SpecTitle = item.Specification.Title });
+                sep = ",";
+            }
+            json += "]";
+            return Content(json);
         }
         //[HttpPost]
         //[ValidateAntiForgeryToken]

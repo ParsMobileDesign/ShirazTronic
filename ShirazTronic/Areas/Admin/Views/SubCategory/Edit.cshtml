@@ -5,6 +5,11 @@
     Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
 }
 
+<style>
+    a.pointer {
+        cursor: pointer;
+    }
+</style>
 <div>
     <h2>Edit Sub Category</h2>
     <partial name="_StatusMessage" model="Model.statusMessage" />
@@ -12,7 +17,7 @@
         <div class="col-6">
             <form asp-action="Save" enctype="multipart/form-data">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" asp-for="SubCategory.Id"  />
+                <input type="hidden" asp-for="SubCategory.Id" />
                 <div class="form-group">
                     <label asp-for="SubCategory.CategoryId"></label>
                     <select id="edCategory" asp-for="SubCategory.CategoryId" asp-items="Model.Categories.GetSelectListItems(Model.SubCategory.CategoryId)" class="form-control"></select>
@@ -43,7 +48,7 @@
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Save</button>
-                <a  class="btn btn-success" asp-action="Index">Back</a>
+                <a class="btn btn-success" asp-action="Index">Back</a>
             </form>
         </div>
         <div class="col-5 offset-1 v-divider">
@@ -53,17 +58,118 @@
             </div>
         </div>
     </div>
-
+    <div class="row mt-3">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="form-group form-row">
+                        <div class="col-3">
+                            <select id="edSpec" class="form-control" asp-items="Model.Specifications.GetSelectListItems(0)">
+                            </select>
+                        </div>
+                        @if (Model.SubCategory.Id > 0)
+                        {
+                            <a class="btn btn-info text-white" id="btnAddSubCatSpec"><i class="fas fa-plus"></i> Add Specification</a>
+                        }
+                    </div>
+                    <div class="row">
+                        <table class="table table-striped table-bordered table-sm">
+                            <thead>
+                                <tr class="table-secondary">
+                                    <th scope="col">Srl</th>
+                                    <th scope="col">Title</th>
+                                    <th scope="col">Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody id="subCatSpecs">
+                                @if (Model.SubCategory.SubCatSpecifications != null && Model.SubCategory.SubCatSpecifications.Count() > 0)
+                                {
+                                    @foreach (var spec in Model.SubCategory.SubCatSpecifications)
+                                    {
+                                        <tr>
+                                            <td>@Html.DisplayFor(m => spec.Specification.Id)</td>
+                                            <td>@Html.DisplayFor(m => spec.Specification.Title)</td>
+                                            <td>
+                                                @{string id = spec.Id + "_" + spec.SubCategoryId;
+                                                }
+                                                <a id="DeleteSubCatSpec_@id" class="pointer">
+                                                    <i class='bx bx-trash bx-lg'></i>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td colspan="3">no specification have defined yet...</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 @section Scripts
 {
     <script>
         $(document).ready(function () {
+            bind();
+            updateSubCatList();
+            $('#edCategory').change(function () {
             updateSubCatList();
         });
-        $('#edCategory').change(function () {
-            updateSubCatList();
-        })
+
+        $('#btnAddSubCatSpec').click(function () {
+            var url = '@Url.Content("~/")' + "Admin/SubCategory/AddSubCatSpec";
+            var SpecId = $('#edSpec').val();
+            var SubCatId = $('#SubCategory_Id').val();
+            $.ajax({
+                url: '/Admin/SubCategory/AddSubCatSpec/',
+                type: 'GET',
+                data: { SubCategoryId: SubCatId, SpecificationId: SpecId },
+                dataType: 'text',
+                success: function (data) {
+                    renderSubCatList(data);
+                }
+
+            });
+        });
+            function renderSubCatList(iData) {
+                console.log('iData : ' + iData);
+            var obj = JSON.parse(iData);
+            var trs = "";
+            for (var i = 0; i < obj.length; i++) {
+                var item = obj[i];
+                trs += "<tr><td>" + item.SpecId + "</td><td>" + item.SpecTitle + '</td><td><a id="DeleteSubCatSpec_' + item.id + "_" + item.SubCatId + '" class="pointer"><i class="bx bx-trash bx-lg"></i></a></td></tr>';
+            }
+            $('#subCatSpecs').html(trs);
+            bind();
+        }
+        function bind() {
+            $('[id^="DeleteSubCatSpec_"').unbind('click');
+            $('[id^="DeleteSubCatSpec_"').click(function () {
+                var ids = $(this).attr('id').split('_');
+                var id = ids[1];
+                var subCatId = ids[2];
+                delSubCatSpec(id, subCatId);
+            });
+        }
+        function delSubCatSpec(id,subcat) {
+                $.ajax({
+                    url: '/Admin/SubCategory/DelSubCatSpec/',
+                    type: 'GET',
+                    data: { id: id, SubCatId: subcat },
+                    dataType: 'text',
+                    success: function (data) {
+                        console.log('data : ' + data);
+                        renderSubCatList(data);
+                    }
+                });
+        }
         function updateSubCatList() {
             var catId = $('#edCategory').val();
             list = $('#subCatList');
@@ -83,7 +189,10 @@
                 }
 
             });
-        }
+         }
+
+        });
+
     </script>
 }
 

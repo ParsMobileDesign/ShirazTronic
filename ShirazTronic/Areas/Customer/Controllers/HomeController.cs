@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -17,14 +18,17 @@ namespace ShirazTronic.Controllers
         ApplicationDbContext db;
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger,ApplicationDbContext _db)
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext _db)
         {
             db = _db;
             _logger = logger;
         }
 
+
         public IActionResult Index()
         {
+            //ConvertExcel e = new ConvertExcel(db);
+            //e.Convert("Category", null);
             return View();
         }
 
@@ -32,7 +36,7 @@ namespace ShirazTronic.Controllers
         {
             return View();
         }
- public IActionResult getAsynci()
+        public IActionResult getAsynci()
         {
             return View();
         }

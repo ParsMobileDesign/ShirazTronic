@@ -5,19 +5,33 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Data;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using LanguageExt.ClassInstances;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.VisualBasic.CompilerServices;
+using Microsoft.EntityFrameworkCore;
 using ShirazTronic.Data;
 
 namespace ShirazTronic.Models
 {
-    public class AppUser: IdentityUser
+    public class ConvertExcel
     {
+        public IFormFile MyImage { set; get; }
+        public string EntityType { set; get; }
+        public string message { set; get; }
+    }
+
+    public class AppUser : IdentityUser
+    {
+        [MaxLength(50)]
         public string FName { get; set; }
+
+        [MaxLength(50)]
         public string LName { get; set; }
         public string Address { get; set; }
         public string City { get; set; }
@@ -28,7 +42,7 @@ namespace ShirazTronic.Models
     {
         public CompanyInfos()
         {
-            Title = "";Address = "";EMail = "";TelNo = "";Description = "";
+            Title = ""; Address = ""; EMail = ""; TelNo = ""; Description = "";
         }
         [Key]
         public byte Id { get; set; }
@@ -62,6 +76,7 @@ namespace ShirazTronic.Models
         public ICollection<SubCategory> SubCategories { get; set; }
 
     }
+
     public class SubCategory
     {
         public SubCategory()
@@ -85,7 +100,32 @@ namespace ShirazTronic.Models
 
         [ForeignKey("CategoryId")]
         public virtual Category Category { get; set; }
+        public IEnumerable<SubCatSpecification> SubCatSpecifications { get; set; }
+
     }
+
+    public class SubCatSpecification
+    {
+        public SubCatSpecification()
+        {
+            this.SubCategoryId = 0;
+            this.SpecificationId = 0;
+        }
+        public SubCatSpecification(int iSubCategoryId, int iSpecificationId)
+        {
+            this.SubCategoryId = iSubCategoryId;
+            this.SpecificationId = iSpecificationId;
+        }
+        public int Id { get; set; }
+        public int SubCategoryId { get; set; }
+        [ForeignKey("SubCategoryId")]
+        public virtual SubCategory SubCategory { get; set; }
+        public int SpecificationId { get; set; }
+        [ForeignKey("SpecificationId")]
+        public virtual Specification Specification { get; set; }
+    }
+
+
     #region Specification
     public class Specification
     {
@@ -100,6 +140,7 @@ namespace ShirazTronic.Models
         public string Title { get; set; }
         [DisplayName("Display Order")]
         public short DisplayOrder { get; set; }
+        public IEnumerable<SpecificationValue> SpecificationValues { get; set; }
     }
     public class SpecificationValue
     {
@@ -109,7 +150,7 @@ namespace ShirazTronic.Models
             this.Value = "";
         }
         public int Id { get; set; }
-       
+
         public int SpecificationId { get; set; }
         [ForeignKey("SpecificationId")]
         public virtual Specification Specification { get; set; }
@@ -125,7 +166,7 @@ namespace ShirazTronic.Models
             this.ProductId = 0;
             this.SpecificationValueId = 0;
         }
-        public ProductSpecification(int ProductId,int SpecValId)
+        public ProductSpecification(int ProductId, int SpecValId)
         {
             this.ProductId = ProductId;
             this.SpecificationValueId = SpecValId;
@@ -144,7 +185,7 @@ namespace ShirazTronic.Models
     {
         public Product()
         {
-            Id = 0; Title = "";ShortDescription = "";FullDescription = "";StockQuantity = 0;NotifyQuantityBelow = 0;Price = 0;
+            Title = ""; ShortDescription = ""; FullDescription = ""; StockQuantity = 0; NotifyQuantityBelow = 0; UnitPrice = 0; BuyingPrice = 0; PartNumber = ""; Brand = ""; RegDate = new DateTime();
         }
         [Key]
         public int Id { get; set; }
@@ -154,27 +195,72 @@ namespace ShirazTronic.Models
         public string ShortDescription { get; set; }
         public string FullDescription { get; set; }
         [Required]
-        [Display(Name ="Quantity")]
+        [Display(Name = "Quantity")]
         public int StockQuantity { get; set; }
 
         [Required]
         [Display(Name = "Notify Quantity")]
         public int NotifyQuantityBelow { get; set; }
-        [Required]
 
-        [Column(TypeName ="decimal(7,4)")]
-        public decimal Price { get; set; }
+        [Required]
+        [DisplayName("Buying Price")]
+        [Column(TypeName = "decimal(7,2)")]
+        public decimal BuyingPrice { get; set; }
+
+        [Required]
+        [DisplayName("Unit Price")]
+        [Column(TypeName = "decimal(7,2)")]
+        public decimal UnitPrice { get; set; }
+
+        [MaxLength(100)]
+        public string Brand { get; set; }
+
+        [Required]
+        [DisplayName("Part Number")]
+        [MaxLength(50)]
+        public string PartNumber { get; set; }
+
+        [DisplayName("Register Date")]
+        public DateTime RegDate { get; set; }
 
         public ICollection<ProductCategory> Categories { get; set; }
         public IEnumerable<ProductImage> Images { get; set; }
         public ICollection<ProductSpecification> ProductSpecification { get; set; }
+    }
+    public class render
+    {
+        public render(int iCatId, int iSubCatid, int iProductId, int iSpecValId, Category icat, SubCategory isubcat, Product iproduct, SpecificationValue ispecval)
+        {
+            this.CatId = iCatId;
+            this.SubCatId = iSubCatid;
+            this.ProductId = iProductId;
+            this.SpecificationValueId = iSpecValId;
+
+            this.Category = icat;
+            this.SubCategory = isubcat;
+            this.Product = iproduct;
+            this.SpecificationValue = ispecval;
+
+
+        }
+        public int CatId { get; set; }
+        public Category Category { get; set; }
+        public int SubCatId { get; set; }
+        public SubCategory SubCategory { get; set; }
+
+        public int ProductId { get; set; }
+        public Product Product { get; set; }
+
+        public int SpecificationValueId { get; set; }
+        public SpecificationValue SpecificationValue { get; set; }
+
     }
 
     public class ProductImage
     {
         public ProductImage()
         {
-            this.ImageAddr="";
+            this.ImageAddr = "";
             this.DisplayOrder = 0;
         }
         public ProductImage(Product iProduct)
@@ -230,25 +316,97 @@ namespace ShirazTronic.Models
     }
     #endregion
 
+    #region Shopping Part
     public class ShoppingCart
     {
         public ShoppingCart()
         {
             Count = 1;
         }
+        [Key]
         public int Id { get; set; }
 
+        [Required]
         public string AppUserId { get; set; }
-        [NotMapped]
         [ForeignKey("AppUserId")]
         public virtual AppUser AppUser { get; set; }
 
         public int ProductId { get; set; }
-        [NotMapped]
         [ForeignKey("ProductId")]
-        public virtual Product Product{ get; set; }
+        public virtual Product Product { get; set; }
 
-        [Range(1,short.MaxValue,ErrorMessage ="Count should be at least 1")]
+        [Range(1, short.MaxValue, ErrorMessage = "Count should be at least 1")]
         public short Count { get; set; }
     }
+
+    public class MemOrder
+    {
+        public MemOrder()
+        {
+            UserId = "";
+            Date = new DateTime();
+            TransactionId = 0;
+            Total = 0;
+            OrderStatus= 0;
+            PaymentStatus = 0;
+            CustomerName = "";
+            CuctomerPhoneNumber = "";
+            AdditionalInfos = "";
+        }
+        [Key]
+        public int Id { get; set; }
+        [Required]
+        public string UserId { get; set; }
+        [ForeignKey("UserId")]
+        public virtual AppUser AppUser { get; set; }
+
+        [Required]
+        public DateTime Date { get; set; }
+
+        public int TransactionId { get; set; }
+
+        [Column(TypeName = "decimal(7,4)")]
+        public decimal Total { get; set; }
+        public byte OrderStatus { get; set; }
+        public byte PaymentStatus { get; set; }
+
+        [MaxLength(100)]
+        [DisplayName("Full name")]
+        public string CustomerName { get; set; }
+        [MaxLength(30)]
+        [DisplayName("Phone Number")]
+        public string CuctomerPhoneNumber { get; set; }
+
+        [MaxLength(500)]
+        [DisplayName("Additional Information")]
+        public string AdditionalInfos { get; set; }
+        public IEnumerable<MemOrderItem> OrderItems { get; set; }
+
+    }
+    public class MemOrderItem
+    {
+        [Key]
+        public int Id { get; set; }
+        [Required]
+        public int MemOrderId { get; set; }
+        [ForeignKey("MemOrderId")]
+        public virtual MemOrder MemOrder { get; set; }
+
+        [Required]
+        public int ProductId { get; set; }
+        [ForeignKey("ProductId")]
+        public virtual Product Product { get; set; }
+
+        public string Title { get; set; }
+        public string Description { get; set; }
+
+        public short Count { get; set; }
+
+        [Required]
+        [DisplayName("Unit Price")]
+        [Column(TypeName = "decimal(7,2)")]
+        public decimal Price { get; set; }
+
+    }
+    #endregion
 }

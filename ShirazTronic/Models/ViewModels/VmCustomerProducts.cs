@@ -8,6 +8,7 @@ namespace ShirazTronic.Models.ViewModels
     public class VmCustomerProducts
     {
         public Category Category { get; set; }
-        public IEnumerable<ProductCategory> Products { get; set; }
+        public SubCategory SubCategory { get; set; }
+        public IEnumerable<Product> Products { get; set; }
     }
 }

@@ -13,7 +13,6 @@ using ShirazTronic.Models;
 namespace ShirazTronic.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = Utility.ManagerUser)]
     public class CategoryController : Controller
     {
         ApplicationDbContext db;

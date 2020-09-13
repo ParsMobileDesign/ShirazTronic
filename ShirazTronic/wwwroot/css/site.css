@@ -1,9 +1,14 @@
 ﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
+@font-face {
+    font-family: Mukta;
+    src: url(../fonts/Mukta-Regular.ttf);
+}
 
 html {
     scroll-behavior: smooth;
 }
+
 a.navbar-brand {
     white-space: normal;
     text-align: center;
@@ -12,7 +17,8 @@ a.navbar-brand {
 
 /* Provide sufficient contrast against white background */
 a {
-    color: #0366d6;
+    color: #4d4643;
+    text-decoration: none
 }
 
 .btn-primary {
@@ -75,9 +81,52 @@ body {
     white-space: nowrap;
     line-height: 60px;*/ /* Vertically center the text there */
 /*}*/
+.h-divider {
+    border-bottom: 1px solid rgba(181, 190, 199, 0.48);
+    padding-bottom: 10px;
+    margin-bottom: 10px
+}
+
+.v-divider {
+    border-left: 1px solid #adb5bd;
+    padding-left: 35px
+}
 
 a.btn {
     cursor: pointer
+}
+
+/* ----------------Cart Styles------------------------*/
+.cart-item-image {
+    width: 55%
+}
+
+.cart-item-plus-minus {
+    font-size: 1.4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center
+}
+
+    .cart-item-plus-minus a i {
+        margin: 0px 10px
+    }
+
+    .cart-item-plus-minus a {
+        text-decoration: none;
+    }
+
+.cart-item-trash {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+}
+
+.cart-item-price {
+    display: flex;
+    align-items: center;
+    font-size: 1.3rem;
 }
 /*--------------------------------------------------------------
 # Footer
@@ -726,8 +775,7 @@ a.btn {
 .page-section {
     width: 97vw;
     padding: 40px;
-    margin:20px 0px
-    
+    margin: 20px 0px
 }
 /*--------------------------------------------------------------
 # Manufacturers
@@ -1032,45 +1080,51 @@ a.btn {
 
 
 .accordion-item .accordion-item-header div {
-  display:flex;
-  flex-direction:row;
-  justify-content:space-between;
-  align-content:center
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-content: center
 }
+
     .accordion-item .accordion-item-header div .accordion-item-icon {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-content: center
     }
-.accordion-item-header-clickable
-{
-    cursor:pointer
+
+.accordion-item-header-clickable {
+    cursor: pointer
 }
+
 .accordion-item .accordion-item-header div i {
     display: flex;
     font-size: 1rem;
     justify-content: center;
     align-content: center
 }
+
 .accordion-item .accordion-item-header div a {
     padding-left: 0px
 }
+
 .accordion-item-header {
     padding: .2rem .3rem;
 }
-.filterMenu-list
-{
-    padding:7px
+
+.filterMenu-list {
+    padding: 7px
 }
+
 .filterMenu-list-items {
     list-style: none;
-    margin-bottom: 0px !important
+    margin-bottom: 0px !important;
+    padding-left: 25px
 }
 
 
 
-# Contact
+/*              # Contact
 --------------------------------------------------------------*/
 .contact .info-wrap {
     box-shadow: 0px 2px 15px rgba(0, 0, 0, 0.1);
@@ -1218,3 +1272,182 @@ a.btn {
         transform: rotate(360deg);
     }
 }
+
+.btn-badge {
+    color: white !important;
+    padding: 4px;
+    cursor: pointer
+}
+
+.shopping-cart {
+    cursor: pointer
+}
+
+
+/*-------------------Hyper-Button----------------------*/
+
+
+.hyper-btn div {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    outline: none;
+    border: 0;
+    vertical-align: middle;
+    text-decoration: none;
+    background: transparent;
+    padding: 0;
+    font-size: inherit;
+    font-family: inherit;
+}
+
+    .hyper-btn div.learn-more {
+        width: 15.5rem;
+        height: auto;
+    }
+
+        .hyper-btn div.learn-more .circle {
+            -webkit-transition: all 0.3s cubic-bezier(0.65, 0, 0.076, 1);
+            transition: all 0.3s cubic-bezier(0.65, 0, 0.076, 1);
+            position: relative;
+            display: block;
+            margin: 0;
+            width: 2.5rem;
+            height: 2.5rem;
+            background: #282936;
+            border-radius: 1.625rem;
+        }
+
+            .hyper-btn div.learn-more .circle .icon {
+                -webkit-transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+                transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                margin: auto;
+                background: #fff;
+            }
+
+                .hyper-btn div.learn-more .circle .icon.arrow {
+                    -webkit-transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+                    transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+                    left: 0.3rem;
+                    width: 1.125rem;
+                    height: 0.125rem;
+                    background: none;
+                }
+
+                    .hyper-btn div.learn-more .circle .icon.arrow::before {
+                        position: absolute;
+                        content: "";
+                        top: -0.25rem;
+                        right: 0.0625rem;
+                        width: 0.625rem;
+                        height: 0.625rem;
+                        border-top: 0.125rem solid #fff;
+                        border-right: 0.125rem solid #fff;
+                        -webkit-transform: rotate(45deg);
+                        transform: rotate(45deg);
+                    }
+
+        .hyper-btn div.learn-more .button-text {
+            -webkit-transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+            transition: all 0.45s cubic-bezier(0.65, 0, 0.076, 1);
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            /*  padding: 0.75rem 0;*/
+            margin-left: 25px;
+            color: #282936;
+            font-weight: 700;
+            line-height: 1.6;
+            text-align: center;
+            text-transform: uppercase;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+    .hyper-btn div:hover .circle {
+        width: 100%;
+    }
+
+        .hyper-btn div:hover .circle .icon.arrow {
+            background: #fff;
+            -webkit-transform: translate(1rem, 0);
+            transform: translate(1rem, 0);
+        }
+
+    .hyper-btn div:hover .button-text {
+        color: #fff;
+    }
+
+
+.btn-summary {
+    display: inline-block;
+    padding: .75rem 1.25rem;
+    border-radius: 10rem;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 1rem;
+    letter-spacing: .15rem;
+    transition: all .3s;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+    .btn-summary:after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #0cf;
+        border-radius: 10rem;
+        z-index: -2;
+    }
+
+    .btn-summary:before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0%;
+        height: 100%;
+        background-color: #008fb3;
+        transition: all .3s;
+        border-radius: 10rem;
+        z-index: -1;
+    }
+
+    .btn-summary:hover {
+        color: #fff;
+    }
+
+        .btn-summary:hover:before {
+            width: 100%;
+        }
+
+
+.shoppingCart-header {
+    /*  background:url(../image/ShoppingCart_bg.png) no-repeat;*/
+    position: relative;
+    z-index: 1;
+}
+
+    .shoppingCart-header::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: .18;
+        z-index: -1;
+        background: url(../image/ShoppingCart_bg.png) no-repeat;
+        background-size:cover
+    }

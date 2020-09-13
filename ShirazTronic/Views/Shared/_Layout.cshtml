@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http 
+@inject IHttpContextAccessor HttpContextAccesor
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -11,6 +13,7 @@
     <link href="~/lib/owl.carousel/assets/owl.theme.default.css" rel="stylesheet" />
     <link href="~/lib/slick/slick.css" rel="stylesheet" />
     <link href="~/lib/slick/slick-theme.css" rel="stylesheet" />
+    <link href="~/lib/jquery-loadingModal/css/jquery.loadingModal.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/css/all.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
@@ -35,7 +38,7 @@
             @await Component.InvokeAsync("Navigation")
             @*<partial  name="_UserMenu"/>*@
             <div class="logo d-flex align-items-center fnt-raleway">
-                <div class="dropdown">
+                @*<div class="dropdown">
                     <button class="btn dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Account and orders
                     </button>
@@ -46,6 +49,16 @@
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="#">Sign Out</a>
                     </div>
+                </div>*@
+                <div id="shoppingCart">
+                    @{
+                        var session = HttpContextAccesor.HttpContext.Session.GetInt32(Utility.ShoppingCartSession);
+                        int? shoppingCartValue = 0;
+                        if (session != null)
+                            shoppingCartValue = session;
+
+                    }
+                    <partial name="_ShoppingCartPartial" model="@shoppingCartValue" />
                 </div>
             </div>
         </div>
@@ -131,10 +144,11 @@
         </footer>*@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-
     <script src="~/js/jquery.sticky.js"></script>
     <script src="~/lib/owl.carousel/owl.carousel.min.js"></script>
     <script src="~/lib/slick/slick.min.js"></script>
+    <script src="~/lib/jquery-loadingModal/js/jquery.loadingModal.min.js"></script>
+
     <script src="~/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
 </body>

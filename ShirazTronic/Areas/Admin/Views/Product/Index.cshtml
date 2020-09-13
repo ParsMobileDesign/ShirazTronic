@@ -18,7 +18,7 @@
                 <th scope="col">@Html.DisplayNameFor(m => m.ShortDescription)</th>
                 <th scope="col">@Html.DisplayNameFor(m => m.StockQuantity)</th>
                 <th scope="col">@Html.DisplayNameFor(m => m.NotifyQuantityBelow)</th>
-                <th scope="col">@Html.DisplayNameFor(m => m.Price)</th>
+                <th scope="col">@Html.DisplayNameFor(m => m.BuyingPrice)</th>
                 <th scope="col">Edit/Delete</th>
             </tr>
         </thead>
@@ -30,7 +30,7 @@
                     <td>@Html.DisplayFor(m => product.ShortDescription)</td>
                     <td>@Html.DisplayFor(m => product.StockQuantity)</td>
                     <td>@Html.DisplayFor(m => product.NotifyQuantityBelow)</td>
-                    <td>@Html.DisplayFor(m => product.Price)</td>
+                    <td>@Html.DisplayFor(m => product.BuyingPrice)</td>
                     <td><partial name="_TableEditDeleteButtons" model="product.Id" /></td>
                 </tr>
             }

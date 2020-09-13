@@ -9,133 +9,57 @@
 
     <div class="container-fluid">
         <div class="row">
-            <div class="col-lg-3 col-md-4 col-sm-4">
+            <div class="col-lg-2 col-md-4 col-sm-4">
                 <div class="card">
-                    <div class="card-header">
-                        Filter
+                    @{string filterBy = ""; }
+                    @if (Model.SubCategory != null)
+                    {
+                        filterBy = Model.SubCategory.Id.ToString();
+                    }
+
+                    <div class="card-header d-flex justify-content-between" filterBy="@filterBy">
+                        Filter  @*<a class="btn btn-outline-info float-right btn-sm">Show All</a>*@<a id="showall-pr" class="badge badge-secondary btn-badge">Show All</a>
                     </div>
                     <div class="accordion" id="filterMenu">
-                        <div class="card accordion-item">
-                            <div class="card-header accordion-item-header" id="1">
-                                <div class="accordion-item-header-clickable" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapse">
-                                    <div>
-                                        <a class="btn btn-link text-left" type="button">
-                                            Termination Style
-                                        </a>
+                        @if (Model.SubCategory != null)
+                        {
+                            string expanded = "true";
+                            string show = "show";
+                            @foreach (var subCatSpec in Model.SubCategory.SubCatSpecifications)
+                            {
+                                <div class="card accordion-item">
+                                    <div class="card-header accordion-item-header" id="1">
+                                        <div class="accordion-item-header-clickable" data-toggle="collapse" data-target="#collapseOne" aria-expanded="@expanded" aria-controls="collapse">
+                                            <div>
+                                                <a class="btn btn-link text-left" type="button">
+                                                    @subCatSpec.Specification.Title
+                                                </a>
+                                            </div>
+                                            <div class="accordion-item-icon"><i class="fas fa-angle-right"></i></div>
+                                        </div>
                                     </div>
-                                    <div class="accordion-item-icon"><i class="fas fa-angle-right"></i></div>
-                                </div>
-                            </div>
 
-                            <div id="collapseOne" class="collapse show" aria-labelledby="1" data-parent="#filterMenu">
-                                <div class="card-body filterMenu-list">
-                                    <ul class="filterMenu-list-items">
-                                        <li><input class="form-check-input" type="checkbox" />Axial</li>
-                                        <li><input class="form-check-input" type="checkbox" /> Axial Ribbon</li>
-                                        <li><input class="form-check-input" type="checkbox" /> Connector</li>
-                                        <li><input class="form-check-input" type="checkbox" /> DIP</li>
-                                        <li><input class="form-check-input" type="checkbox" /> Insert Threaded</li>
-                                        <li><input class="form-check-input" type="checkbox" /> Lug</li>
-                                        <li><input class="form-check-input" type="checkbox" /> Microstrip</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card accordion-item">
-                            <div class="card-header accordion-item-header" id="2">
-                                <div class="accordion-item-header-clickable" data-toggle="collapse" data-target="#collapsetwo" aria-expanded="false" aria-controls="collapse">
-                                    <div>
-                                        <a class="btn btn-link text-left" type="button">
-                                            Capacitance
-                                        </a>
-                                    </div>
-                                    <div class="accordion-item-icon"><i class="fas fa-angle-right"></i></div>
-                                </div>
-                            </div>
-                            <div id="collapsetwo" class="collapse" aria-labelledby="2" data-parent="#filterMenu">
-                                <div class="card-body filterMenu-list">
-                                    <ul class="filterMenu-list-items">
-                                        <li><input class="form-check-input" type="checkbox" /> 0.011 pF</li>
-                                        <li><input class="form-check-input" type="checkbox" /> 0.012 pF</li>
-                                        <li><input class="form-check-input" type="checkbox" /> 0.014 pF</li>
-                                        <li><input class="form-check-input" type="checkbox" /> 0.015 pF</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card accordion-item">
-                            <div class="card-header accordion-item-header" id="3">
-                                <div class="accordion-item-header-clickable" data-toggle="collapse" data-target="#collapsethree" aria-expanded="false" aria-controls="collapse">
-                                    <div>
-                                        <a class="btn btn-link text-left" type="button">
-                                            Voltage Rating DC
-                                        </a>
-                                    </div>
-                                    <div class="accordion-item-icon"><i class="fas fa-angle-right"></i></div>
-                                </div>
-                            </div>
+                                    <div id="collapseOne" class="collapse @show" aria-labelledby="1" data-parent="#filterMenu">
+                                        <div class="card-body filterMenu-list">
+                                            <ul class="filterMenu-list-items" specsrl="@subCatSpec.SpecificationId">
+                                                @foreach (var specVal in subCatSpec.Specification.SpecificationValues)
+                                                {
+                                                    <li><input class="form-check-input" type="checkbox" specValsrl="@specVal.Id" />@specVal.Value</li>
 
-                            <div id="collapsethree" class="collapse" aria-labelledby="3" data-parent="#filterMenu">
-                                <div class="card-body filterMenu-list">
-                                    <ul class="filterMenu-list-items">
-                                        <li><input class="form-check-input" type="checkbox" /> 2 VDC</li>
-                                        <li><input class="form-check-input" type="checkbox" /> 2.1 VDC</li>
-                                        <li><input class="form-check-input" type="checkbox" /> 2.3 VDC</li>
-                                        <li><input class="form-check-input" type="checkbox" /> 2.5 VDC</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card accordion-item">
-                            <div class="card-header accordion-item-header" id="4">
-                                <div class="accordion-item-header-clickable" data-toggle="collapse" data-target="#collapsefour" aria-expanded="false" aria-controls="collapse">
-                                    <div>
-                                        <a class="btn btn-link text-left" type="button">
-                                            Diameter
-                                        </a>
+                                                }
+                                            </ul>
+                                        </div>
                                     </div>
-                                    <div class="accordion-item-icon"><i class="fas fa-angle-right"></i></div>
                                 </div>
-                            </div>
-
-                            <div id="collapsefour" class="collapse" aria-labelledby="4" data-parent="#filterMenu">
-                                <div class="card-body filterMenu-list">
-                                    <ul class="filterMenu-list-items">
-                                        <li><input class="form-check-input" type="checkbox" /> 1.9 mm </li>
-                                        <li><input class="form-check-input" type="checkbox" /> 2 mm</li>
-                                        <li><input class="form-check-input" type="checkbox" /> 3 mm</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card accordion-item">
-                            <div class="card-header accordion-item-header" id="4">
-                                <div class="accordion-item-header-clickable" data-toggle="collapse" data-target="#collapsefour" aria-expanded="false" aria-controls="collapse">
-                                    <div>
-                                        <a class="btn btn-link text-left" type="button">
-                                            Mounting Style
-                                        </a>
-                                    </div>
-                                    <div class="accordion-item-icon"><i class="fas fa-angle-right"></i></div>
-                                </div>
-                            </div>
-
-                            <div id="collapsefour" class="collapse" aria-labelledby="4" data-parent="#filterMenu">
-                                <div class="card-body filterMenu-list">
-                                    <ul class="filterMenu-list-items">
-                                        <li><input class="form-check-input" type="checkbox" /> Bracket Mount</li>
-                                        <li><input class="form-check-input" type="checkbox" /> Cable Mount</li>
-                                        <li><input class="form-check-input" type="checkbox" /> Chassis</li>
-                                        <li><input class="form-check-input" type="checkbox" /> Chassis Mount</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+                                expanded = "false";
+                                show = "";
+                            }
+                        }
                     </div>
                 </div>
             </div>
             <div class="col-lg-9 col-md-8 col-sm-8">
-                <div class="row">
+                <div class="row" id="grid">
                     @if (Model.Category != null)
                     {
                         if (Model.Category.SubCategories.Count > 0)
@@ -171,33 +95,7 @@
                     {
                         if (Model.Products.Count() > 0)
                         {
-                            foreach (var product in Model.Products)
-                            {
-                                <div class="col-lg-3 col-sm-6 d-flex align-items-stretch">
-                                    <div class="product-list-item aos-init aos-animate" data-aos="fade-up">
-                                        <div class="product-list-item-img">
-                                            @{
-                                                string imageAddr = "";
-                                                if (product.Product.Images.Count() > 0)
-                                                    imageAddr = product.Product.Images.ElementAt(0).ImageAddr;
-                                            }
-                                            <img src="@imageAddr" class="img-fluid" alt="">
-                                            <div class="extra-link">
-                                                <a id="btnAddToCart_@product.ProductId">
-                                                    <i class='bx bxs-cart-add'></i>
-                                                </a>
-                                                <a asp-action="SelProduct" asp-route-pId="@product.ProductId">
-                                                    <i class='bx bx-show-alt'></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="product-list-item-info">
-                                            <h4>@product.Product.Title</h4>
-                                            <span>@product.Product.ShortDescription</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            }
+                            <partial name="_ProductPartial" model="@Model.Products" />
                         }
                         else
                         {
@@ -215,6 +113,7 @@
 {
     <script>
         $(document).ready(function () {
+           
             $(".accordion-item-header-clickable").click(function (e) {
                 e.stopPropagation();
                 var check = $(this).attr('aria-expanded');
@@ -233,9 +132,29 @@
                 }
 
             });
-            $('[id ^= "btnAddToCart_"]').click(function () {
-                console.log('asd');
+            $('#showall-pr').click(function () {
+                $('[specvalsrl]:checked').each(function () {
+                    $(this).prop('checked', false);
+
+                });
+                resetPl();
             });
+            //$('[id ^= "btnAddToCart_"]').click(function () {
+            //    var pId = $(this).attr('id').split("_")[1];
+            //    console.log(pId);
+            //    $.ajax({
+
+            //        method: 'POST',
+            //        url: '/Customer/Product/AddToCart',
+            //        data: { productId: pId },
+            //        error: function () {
+            //            console.log('error');
+            //        }
+            //    }).done(function () { }).fail(function () {
+            //        window.location = "/Identity/Account/Login";
+            //    })
+              
+            //});
         })
 
     </script>

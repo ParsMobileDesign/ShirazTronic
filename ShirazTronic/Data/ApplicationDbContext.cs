@@ -15,6 +15,7 @@ namespace ShirazTronic.Data
         public DbSet<CompanyInfos> CompanyInfo { get; set; }
         public DbSet<Category> Category{ get; set; }
         public DbSet<SubCategory> SubCategory{ get; set; }
+        public DbSet<SubCatSpecification> SubCatSpecification { get; set; }
         public DbSet<Product> Product { get; set; }
         public DbSet<ProductCategory> ProductCategory { get; set; }
         public DbSet<ProductImage> ProductImage { get; set; }
@@ -23,6 +24,8 @@ namespace ShirazTronic.Data
         public DbSet<ProductSpecification> ProductSpecification { get; set; }
         public DbSet<AppUser> AppUser { get; set; }
         public DbSet<ShoppingCart> ShoppingCart { get; set; }
+        public DbSet<MemOrder> MemOrder { get; set; }
+        public DbSet<MemOrderItem> MemOrderItem { get; set; }
 
 
         //-------------Program Models

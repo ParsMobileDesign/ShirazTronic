@@ -334,7 +334,8 @@
 }
 
 .v-divider {
-    border-left: 1px solid #adb5bd
+    border-left: 1px solid #adb5bd;
+    padding-left:35px
 }
 
 .card-header {
