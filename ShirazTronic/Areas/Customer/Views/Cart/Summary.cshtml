@@ -86,30 +86,27 @@
 @section Scripts
     {
     <script type="text/javascript">
-       
+
         var stripe = Stripe('pk_test_51HQr25GGelM299yxAlK7zdZXF3lxFHRqdOczDVitXei3aY7GI47WOK5Vfz57pv7dPgEkJLxIeJlDcqOdaJUo8HRL00ZKaWxli9');
         var checkoutButton = document.getElementById('checkOut');
         checkoutButton.addEventListener('click', function () {
             showLoading();
             fetch('/create-checkout-session', {
                 method: 'POST',
-            })
-                .then(function (response) {
+            }).then(function (response) {
                     return response.json();
-                })
-                .then(function (session) {
+                }).then(function (session) {
                     return stripe.redirectToCheckout({ sessionId: session.id });
-                })
-                .then(function (result) {
+                }).then(function (result) {
+                    alert(result);
                     // If `redirectToCheckout` fails due to a browser or network
                     // error, you should display the localized error message to your
                     // customer using `error.message`.
                     if (result.error) {
                         alert(result.error.message);
                     }
-                })
-                .catch(function (error) {
-                    console.error('Error:', error);
+                }).catch(function (error) {
+                    console.log('Error:'+ error);
                 });
         });
     </script>
