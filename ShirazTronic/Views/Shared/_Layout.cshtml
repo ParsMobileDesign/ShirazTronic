@@ -52,7 +52,7 @@
                 </div>*@
                 <div id="shoppingCart">
                     @{
-                        var session = HttpContextAccesor.HttpContext.Session.GetInt32(Utility.ShoppingCartSession);
+                        var session = HttpContextAccesor.HttpContext.Session.GetInt32(U.ShoppingCartSession);
                         int? shoppingCartValue = 0;
                         if (session != null)
                             shoppingCartValue = session;

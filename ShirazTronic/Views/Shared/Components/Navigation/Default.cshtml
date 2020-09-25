@@ -19,7 +19,7 @@
                 }
             </ul>
         </li>
-        @if (User.IsInRole(Utility.ManagerUser))
+        @if (User.IsInRole(U.ManagerUser))
         {
             <li><a asp-action="Index" asp-controller="Home" asp-area="Admin">Admin Home</a></li>
         }

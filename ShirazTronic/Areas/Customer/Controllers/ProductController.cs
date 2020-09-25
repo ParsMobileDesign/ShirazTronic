@@ -37,7 +37,7 @@ namespace ShirazTronic.Areas.Customer.Controllers
             {
                 products = db.ProductCategory.Include(e => e.Product).ThenInclude(product => product.Images).Include(product => product.Product.ProductSpecification).Where(e => e.SubCatId == subCatId).Select(p => p.Product).ToList();
                 subcat = db.SubCategory.Include(e => e.SubCatSpecifications).ThenInclude(e => e.Specification).ThenInclude(s => s.SpecificationValues).FirstOrDefault(e => e.Id == subCatId);
-                HttpContext.Session.SetInt32(Utility.SubCategoryIdSession, subCatId);
+                HttpContext.Session.SetInt32(U.SubCategoryIdSession, subCatId);
             }
 
             var customerProducts = new VmCustomerProducts()
@@ -69,7 +69,7 @@ namespace ShirazTronic.Areas.Customer.Controllers
             db.SaveChanges();
 
             var shoppingCartItems = db.ShoppingCart.Where(sc => sc.AppUserId == claim.Value).Count();
-            HttpContext.Session.SetInt32(Utility.ShoppingCartSession, shoppingCartItems);
+            HttpContext.Session.SetInt32(U.ShoppingCartSession, shoppingCartItems);
 
             return PartialView("_ShoppingCartPartial", shoppingCartItems);
         }
@@ -85,7 +85,7 @@ namespace ShirazTronic.Areas.Customer.Controllers
         public async Task<IActionResult> FilterAp(string jsonQuery)
         {
             var objArray = jsonQuery.Split("-");
-            int subCatId = (int)HttpContext.Session.GetInt32(Utility.SubCategoryIdSession);
+            int subCatId = (int)HttpContext.Session.GetInt32(U.SubCategoryIdSession);
             productsToFilter = await db.Product.Include(p => p.Images).Include(p => p.ProductSpecification).ThenInclude(ps => ps.SpecificationValue).Where(e => e.Categories.Any(pc => pc.SubCatId == subCatId)).ToListAsync();
             for (int i = 0; i < objArray.Length; i++)
             {
@@ -97,7 +97,7 @@ namespace ShirazTronic.Areas.Customer.Controllers
         }
         public async Task<IActionResult> resetAp()
         {
-            int subCatid = (int)HttpContext.Session.GetInt32(Utility.SubCategoryIdSession);
+            int subCatid = (int)HttpContext.Session.GetInt32(U.SubCategoryIdSession);
             IEnumerable<Product> products = await db.Product.Include(p => p.Images).Include(p => p.ProductSpecification).ThenInclude(ps => ps.SpecificationValue).Where(e => e.Categories.Any(pc => pc.SubCatId == subCatid)).ToListAsync();
             return PartialView("_ProductPartial", products);
         }

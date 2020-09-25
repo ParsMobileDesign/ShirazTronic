@@ -10,7 +10,7 @@ using ShirazTronic.Data;
 namespace ShirazTronic.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = Utility.ManagerUser)]
+    [Authorize(Roles = U.ManagerUser)]
     public class UserController : Controller
     {
         ApplicationDbContext db;

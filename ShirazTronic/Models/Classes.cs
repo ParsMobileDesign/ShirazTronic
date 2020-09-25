@@ -19,11 +19,55 @@ using ShirazTronic.Data;
 
 namespace ShirazTronic.Models
 {
+    public  class DbInitializer : IDbInitializer
+    {
+        private readonly ApplicationDbContext db;
+        private readonly UserManager<IdentityUser> userManager;
+        private readonly RoleManager<IdentityRole> roleManager;
+        public DbInitializer(ApplicationDbContext _db, UserManager<IdentityUser> _userManager, RoleManager<IdentityRole> _roleManager)
+        {
+            db = _db;
+            userManager = _userManager;
+            roleManager = _roleManager;
+        }
+        public  async void initialize()
+        {
+            try
+            {
+                if (db.Database.GetPendingMigrations().Count() > 0)
+                    db.Database.Migrate();
+            }
+            catch (Exception e) { }
+
+            if (db.Roles.Any(r => r.Name == U.ManagerUser)) return;
+
+            roleManager.CreateAsync(new IdentityRole(U.ManagerUser)).GetAwaiter().GetResult();
+            roleManager.CreateAsync(new IdentityRole(U.ControllerUser)).GetAwaiter().GetResult();
+            roleManager.CreateAsync(new IdentityRole(U.CustomerUser)).GetAwaiter().GetResult();
+
+            userManager.CreateAsync(new AppUser
+            {
+                UserName = "admin@gmail.com",
+                Email = "admin@gmail.com",
+                PhoneNumber = "09111111111",
+                FName = "administrator",
+                LName = "Company",
+                EmailConfirmed = true
+            }, "Admin50#").GetAwaiter().GetResult();
+
+            IdentityUser user = await db.Users.FirstOrDefaultAsync(e => e.UserName == "admin@gmail.com");
+            await userManager.AddToRoleAsync(user, U.ManagerUser);
+        }
+    }
     public class ConvertExcel
     {
         public IFormFile MyImage { set; get; }
         public string EntityType { set; get; }
         public string message { set; get; }
+
+        public bool isCategoryChecked { set; get; }
+        public bool isSpecChecked { set; get; }
+        public bool isProductChecked { set; get; }
     }
 
     public class AppUser : IdentityUser
@@ -345,9 +389,9 @@ namespace ShirazTronic.Models
         {
             UserId = "";
             Date = new DateTime();
-            TransactionId = 0;
+            TransactionId = "";
             Total = 0;
-            OrderStatus= 0;
+            OrderStatus = 0;
             PaymentStatus = 0;
             CustomerName = "";
             CuctomerPhoneNumber = "";
@@ -363,7 +407,7 @@ namespace ShirazTronic.Models
         [Required]
         public DateTime Date { get; set; }
 
-        public int TransactionId { get; set; }
+        public string TransactionId { get; set; }
 
         [Column(TypeName = "decimal(7,4)")]
         public decimal Total { get; set; }
@@ -398,7 +442,6 @@ namespace ShirazTronic.Models
         public virtual Product Product { get; set; }
 
         public string Title { get; set; }
-        public string Description { get; set; }
 
         public short Count { get; set; }
 

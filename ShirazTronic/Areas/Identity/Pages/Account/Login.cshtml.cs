@@ -89,7 +89,7 @@ namespace ShirazTronic.Areas.Identity.Pages.Account
                 {
                     var user = db.AppUser.Where(u => u.Email == Input.Email).FirstOrDefault();
                     var count = db.ShoppingCart.Where(sc => sc.AppUserId == user.Id).Count();
-                    HttpContext.Session.SetInt32(Utility.ShoppingCartSession, count);
+                    HttpContext.Session.SetInt32(U.ShoppingCartSession, count);
                     _logger.LogInformation("User logged in.");
                     return LocalRedirect(returnUrl);
                 }

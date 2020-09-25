@@ -14,7 +14,7 @@ using ShirazTronic.Models.ViewModels;
 namespace ShirazTronic.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = Utility.ManagerUser)]
+    [Authorize(Roles = U.ManagerUser)]
     public class ProductController : Controller
     {
         private readonly ApplicationDbContext db;
@@ -114,7 +114,7 @@ namespace ShirazTronic.Areas.Admin.Controllers
                 var files = HttpContext.Request.Form.Files;
                 var productImageInDB = db.ProductImage.Find(productImage.Id);
                 var filenameComplete = productImage.ProductId.ToString() + "_" + productImage.Id.ToString();
-                productImageInDB.ImageAddr = Utility.SaveFileThenGetFileName(webHostEnvironment, "products", files, filenameComplete);
+                productImageInDB.ImageAddr = U.SaveFileThenGetFileName(webHostEnvironment, "products", files, filenameComplete);
                 db.SaveChanges();
 
                 return RedirectToAction(nameof(Edit), new { id = productImage.ProductId });

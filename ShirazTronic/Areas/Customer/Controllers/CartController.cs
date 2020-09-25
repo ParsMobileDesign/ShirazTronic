@@ -10,6 +10,10 @@ using ShirazTronic.Models;
 using ShirazTronic.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
+using Stripe.Checkout;
+using Stripe;
+using System.Configuration;
+using Microsoft.Extensions.Configuration;
 
 namespace ShirazTronic.Areas.Customer.Controllers
 {
@@ -17,10 +21,14 @@ namespace ShirazTronic.Areas.Customer.Controllers
     [Area("Customer")]
     public class CartController : Controller
     {
-        ApplicationDbContext db;
-        public CartController(ApplicationDbContext _db)
+        private readonly ApplicationDbContext db;
+        private readonly IConfiguration Configuration;
+        public CartController(ApplicationDbContext _db,IConfiguration iConfig)
         {
             db = _db;
+            Configuration = iConfig;
+            StripeConfiguration.ApiKey = Configuration["Stripe:SecretKey"];
+
         }
         public IActionResult Index()
         {
@@ -63,19 +71,18 @@ namespace ShirazTronic.Areas.Customer.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Checkout(VmShoppingCart shoppingCart)
+        public async Task<IActionResult> Checkout(VmShoppingCart shoppingCart, string stripeToken)
         {
-            var claims = (ClaimsIdentity)this.User.Identity;
-            var claim = claims.FindFirst(ClaimTypes.NameIdentifier);
-            var cartItems = db.ShoppingCart.Include(e => e.Product).Where(sc => sc.AppUserId == claim.Value).ToList();
+            string userId = U.getUserId(this);
+            var cartItems = db.ShoppingCart.Include(e => e.Product).Where(sc => sc.AppUserId == userId).ToList();
 
-            shoppingCart.MemOrder.UserId = claim.Value;
+            shoppingCart.MemOrder.UserId = userId;
             shoppingCart.MemOrder.Date = new DateTime();
-            // shoppingCart.MemOrder.Total
-            shoppingCart.MemOrder.OrderStatus = Utility.OrderStatus_Submitted;
-            shoppingCart.MemOrder.PaymentStatus = Utility.PaymentStatus_Pending;
+            shoppingCart.MemOrder.OrderStatus = U.OrderStatus_Submitted;
+            shoppingCart.MemOrder.PaymentStatus = U.PaymentStatus_Pending;
             db.MemOrder.Add(shoppingCart.MemOrder);
             await db.SaveChangesAsync();
+            shoppingCart.MemOrder.Total = 0;
 
             foreach (var item in cartItems)
             {
@@ -87,13 +94,76 @@ namespace ShirazTronic.Areas.Customer.Controllers
                     Count = item.Count,
                     Price = item.Product.UnitPrice
                 };
+                db.MemOrderItem.Add(memOrderItem);
+                shoppingCart.MemOrder.Total += memOrderItem.Count * memOrderItem.Price;
             }
+            //await db.SaveChangesAsync();
+            db.ShoppingCart.RemoveRange(cartItems);
+            HttpContext.Session.SetInt32(U.ShoppingCartSession, 0);
+            await db.SaveChangesAsync();
 
-            return View();
+            var option = new ChargeCreateOptions()
+            {
+                Amount = Convert.ToInt32(shoppingCart.MemOrder.Total * 100),
+                Currency = "usd",
+                Description = "Order Id:" + shoppingCart.MemOrder.Id,
+                Source = stripeToken
+            };
+
+            var service = new ChargeService();
+            Charge charge = service.Create(option);
+
+            if (charge.BalanceTransactionId == null)
+                shoppingCart.MemOrder.PaymentStatus = U.PaymentStatus_Rejected;
+            else
+                shoppingCart.MemOrder.TransactionId = charge.BalanceTransactionId;
+            if(charge.Status.ToLower()=="succeeded")
+            {
+                shoppingCart.MemOrder.PaymentStatus = U.PaymentStatus_Approved;
+                shoppingCart.MemOrder.OrderStatus = U.OrderStatus_Submitted;
+            }
+            else
+                shoppingCart.MemOrder.PaymentStatus = U.PaymentStatus_Approved;
+
+            await db.SaveChangesAsync();
+            return RedirectToAction(nameof(Index), "Home");
         }
+        [HttpPost("create-checkout-session")]
+        public ActionResult CreateCheckoutSession()
+        {
+            string userId = U.getUserId(this);
+            var cartItems = db.ShoppingCart.Include(e=>e.Product).Where(sc => sc.AppUserId == userId).ToList();
+            decimal total = 0;
+            foreach (var item in cartItems)
+                total += item.Count * item.Product.UnitPrice;
+            var options = new SessionCreateOptions
+            {
+                PaymentMethodTypes = new List<string> { "card" },
+                LineItems = new List<SessionLineItemOptions>
+                {
+                    new SessionLineItemOptions
+                    {
+                         PriceData = new SessionLineItemPriceDataOptions
+                         {
+                            UnitAmount =(long) total*100,
+                            Currency = "usd",
+                            ProductData = new SessionLineItemPriceDataProductDataOptions
+                            {
+                               Name = "Checkout your Purchase",
+                            },
+                         },
+                        Quantity = 1,
+                    },
+                },
+                Mode = "payment",
+                SuccessUrl = "https://localhost:44312/Customer/Cart/Checkout/",
+                CancelUrl = "https://localhost:44312/Customer/Cart/DiscartCheckout/",
+            };
 
-
-
+            var service = new SessionService();
+            Session session = service.Create(options);
+            return Json(new { id = session.Id });
+        }
 
 
         /// <summary>
@@ -120,7 +190,7 @@ namespace ShirazTronic.Areas.Customer.Controllers
                         {
                             db.ShoppingCart.Remove(shoppingcartInDB);
                             var shoppingCartCount = db.ShoppingCart.Where(e => e.AppUser == shoppingcartInDB.AppUser).Count();
-                            HttpContext.Session.SetInt32(Utility.ShoppingCartSession, shoppingCartCount);
+                            HttpContext.Session.SetInt32(U.ShoppingCartSession, shoppingCartCount);
                         }
 
                         break;

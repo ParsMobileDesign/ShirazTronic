@@ -31,7 +31,7 @@ namespace ShirazTronic.Areas.Identity.Pages.Account
         {
             await _signInManager.SignOutAsync();
             _logger.LogInformation("User logged out.");
-            HttpContext.Session.SetInt32(Utility.ShoppingCartSession, 0);
+            HttpContext.Session.SetInt32(U.ShoppingCartSession, 0);
             if (returnUrl != null)
             {
                 return LocalRedirect(returnUrl);

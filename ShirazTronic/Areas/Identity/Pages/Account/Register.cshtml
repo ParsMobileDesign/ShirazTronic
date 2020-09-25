@@ -74,15 +74,15 @@
                     </div>
 
                 </div>
-                @if (User.IsInRole(ShirazTronic.Utility.ManagerUser))
+                @if (User.IsInRole(ShirazTronic.U.ManagerUser))
                 {
                     <div class="form-group form-row">
                         <div class="col-lg-6 col-md-6 col-sm-6">
-                            <input id="rdCustomer" type="radio" name="role" value="@Utility.CustomerUser" />
+                            <input id="rdCustomer" type="radio" name="role" value="@U.CustomerUser" />
                             <label for="rdCustomer">Customer</label>
-                            <input id="rdController" type="radio" name="role" value="@Utility.ControllerUser" checked />
+                            <input id="rdController" type="radio" name="role" value="@U.ControllerUser" checked />
                             <label for="rdController">Controller</label>
-                            <input id="rdManager" type="radio" name="role" value="@Utility.ManagerUser" />
+                            <input id="rdManager" type="radio" name="role" value="@U.ManagerUser" />
                             <label for="rdManager">Manager</label>
 
                         </div>

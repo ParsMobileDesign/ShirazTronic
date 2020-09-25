@@ -18,13 +18,29 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="row">
                 <div class="form-group col-md-4">
+                    <div class="form-check mr-5">
+                        <input type="checkbox" class="form-check-input" asp-for="@Model.isCategoryChecked">
+                        <label class="form-check-label" asp-for="@Model.isCategoryChecked">Category</label>
+                    </div>
+                    <div class="form-check mr-5">
+                        <input type="checkbox" class="form-check-input" asp-for="@Model.isSpecChecked">
+                        <label class="form-check-label" asp-for="@Model.isSpecChecked">Specification</label>
+                    </div>
+                    <div class="form-check mr-5">
+                        <input type="checkbox" class="form-check-input" asp-for="@Model.isProductChecked">
+                        <label class="form-check-label" asp-for="@Model.isProductChecked">Product</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-4">
                     <div class="custom-file">
                         <input type="file" id="files" class="custom-file-input" asp-for="MyImage">
                         <label class="custom-file-label">Choose file...</label>
                         <div class="invalid-feedback">Example invalid custom file feedback</div>
                     </div>
                 </div>
-                <div class="form-group col-md-4">
+                @*<div class="form-group col-md-4">
                     <div class="custom-file">
                         <select class="form-control" asp-for="EntityType">
                             <option value="Category">Category & SubCategory</option>
@@ -32,7 +48,7 @@
                             <option value="Product">Product</option>
                         </select>
                     </div>
-                </div>
+                </div>*@
             </div>
             <button type="submit" class="btn btn-primary">Convert</button>
             <a class="btn btn-success" asp-action="Index">Back</a>

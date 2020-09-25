@@ -1,14 +1,16 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace ShirazTronic
 {
-    public static class Utility
+    public static class U
     {
        
         public const string defaultProductImage = "default.jpg";
@@ -47,6 +49,13 @@ namespace ShirazTronic
         /// desire file name
         /// </param>
         /// <returns></returns>
+        /// 
+        public static string getUserId(Controller iController)
+        {
+            var claims = (ClaimsIdentity)iController.User.Identity;
+            var claim = claims.FindFirst(ClaimTypes.NameIdentifier);
+            return claim.Value;
+        }
         public static string SaveFileThenGetFileName(IWebHostEnvironment iWebHostEnvironment,string iWWWRootDesireFolder, IFormFileCollection iFile,string fileNameTobeSaved)
         {
             string extention = ".jpg";
@@ -62,7 +71,7 @@ namespace ShirazTronic
             }
             else
             {
-                var defaultDocument= Path.Combine(uploadPath+"\\" + Utility.defaultProductImage);
+                var defaultDocument= Path.Combine(uploadPath+"\\" + U.defaultProductImage);
 
                 System.IO.File.Copy(defaultDocument,Path.Combine(uploadPath , fileNameTobeSaved+".jpg"));
 
@@ -70,5 +79,11 @@ namespace ShirazTronic
             return @"\image\products\" + fileNameTobeSaved+ extention;
            
         }
+    }
+
+    public class StripeSettings
+    {
+        public string SecretKey { get; set; }
+        public string PublishableKey { get; set; }
     }
 }

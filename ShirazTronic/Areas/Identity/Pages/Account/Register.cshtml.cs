@@ -119,26 +119,26 @@ namespace ShirazTronic.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
 
-                    if (!await roleManager.RoleExistsAsync(Utility.ManagerUser))
-                    {
-                        await roleManager.CreateAsync(new IdentityRole(Utility.ManagerUser));
-                    }
-                    if (!await roleManager.RoleExistsAsync(Utility.ControllerUser))
-                    {
-                        await roleManager.CreateAsync(new IdentityRole(Utility.ControllerUser));
-                    }
-                    if (!await roleManager.RoleExistsAsync(Utility.CustomerUser))
-                    {
-                        await roleManager.CreateAsync(new IdentityRole(Utility.CustomerUser));
-                    }
+                    //if (!await roleManager.RoleExistsAsync(U.ManagerUser))
+                    //{
+                    //    await roleManager.CreateAsync(new IdentityRole(U.ManagerUser));
+                    //}
+                    //if (!await roleManager.RoleExistsAsync(U.ControllerUser))
+                    //{
+                    //    await roleManager.CreateAsync(new IdentityRole(U.ControllerUser));
+                    //}
+                    //if (!await roleManager.RoleExistsAsync(U.CustomerUser))
+                    //{
+                    //    await roleManager.CreateAsync(new IdentityRole(U.CustomerUser));
+                    //}
                     string assignedRole = "";
                     switch (role)
                     {
                         case "Controller":
-                            assignedRole = Utility.ControllerUser;
+                            assignedRole = U.ControllerUser;
                             break;
                         case "Manager":
-                            assignedRole = Utility.ManagerUser;
+                            assignedRole = U.ManagerUser;
                             break;
                         case "Customer":
                         default:

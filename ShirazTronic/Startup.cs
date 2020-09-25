@@ -12,6 +12,8 @@ using ShirazTronic.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Stripe;
+using ShirazTronic.Models;
 
 namespace ShirazTronic
 {
@@ -33,6 +35,8 @@ namespace ShirazTronic
             services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddDefaultTokenProviders().AddDefaultUI()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddScoped<IDbInitializer, DbInitializer>();
+            services.Configure<StripeSettings>(Configuration.GetSection("Stripe"));
             services.AddControllersWithViews();
             services.AddRazorPages().AddRazorRuntimeCompilation();
             services.AddSession(option =>
@@ -45,7 +49,7 @@ namespace ShirazTronic
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,IDbInitializer dbInitializer)
         {
             if (env.IsDevelopment())
             {
@@ -62,7 +66,9 @@ namespace ShirazTronic
             app.UseStaticFiles();
 
             app.UseRouting();
+            dbInitializer.initialize();
 
+            StripeConfiguration.ApiKey = Configuration.GetSection("Stripe")["SecretKey"];
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseSession();

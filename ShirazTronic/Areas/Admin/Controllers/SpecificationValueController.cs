@@ -16,7 +16,7 @@ using ShirazTronic.Models.ViewModels;
 namespace ShirazTronic.Areas.Admin.Controllers
 {
     [Area("Admin")]
-    [Authorize(Roles = Utility.ManagerUser)]
+    [Authorize(Roles = U.ManagerUser)]
     public class SpecificationValueController : Controller
     {
         ApplicationDbContext db;
