@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Logging;
 using ShirazTronic.Data;
 using ShirazTronic.Models;
+using ShirazTronic.Models.ViewModels;
 
 namespace ShirazTronic.Controllers
 {
@@ -27,9 +24,17 @@ namespace ShirazTronic.Controllers
 
         public IActionResult Index()
         {
-            //ConvertExcel e = new ConvertExcel(db);
-            //e.Convert("Category", null);
-            return View();
+            var count = 0;
+            var user = U.getUserId(this);
+            if (!string.IsNullOrEmpty(user))
+               count= db.ShoppingCart.Where(e => e.AppUserId == user).ToList().Count;
+            HttpContext.Session.SetInt32(U.ShoppingCartSession, count);
+            var customerModel = new VmCustomerHomePage
+            {
+                Manufacturers = db.Manufacturer.ToList(),
+                CompanyInfos = db.CompanyInfo.ToList()
+            };
+            return View(customerModel);
         }
 
         public IActionResult Privacy()

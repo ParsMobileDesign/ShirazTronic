@@ -35,7 +35,7 @@ namespace ShirazTronic.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (com.Id == 0)
+                if (db.CompanyInfo.Count() == 0)
                     db.CompanyInfo.Add(com);
                 else
                     db.CompanyInfo.Update(com);

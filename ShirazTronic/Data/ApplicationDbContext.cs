@@ -26,6 +26,7 @@ namespace ShirazTronic.Data
         public DbSet<ShoppingCart> ShoppingCart { get; set; }
         public DbSet<MemOrder> MemOrder { get; set; }
         public DbSet<MemOrderItem> MemOrderItem { get; set; }
+        public DbSet<Manufacturer> Manufacturer { get; set; }
 
 
         //-------------Program Models

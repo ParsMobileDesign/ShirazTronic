@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Manufacturer>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
+}
+<div class="row bg-white rounded">
+    <div class="col-6"><h2>Manufacturer List</h2></div>
+    <div class="col-6 text-right">
+        <partial name="_CreateButton" />
+    </div>
+</div>
+<div class="row">
+    @if (Model.Count() > 0)
+    {
+        <table class="table table-bordered table-hover table-sm  custom-data-table">
+            <thead>
+                <tr class="table-secondary">
+                    <th scope="col">@Html.DisplayNameFor(m => m.Title)</th>
+                    <th scope="col">@Html.DisplayNameFor(m => m.Description)</th>
+                    <th scope="col">Has Logo</th>
+                    <th scope="col">Edit/Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var manufacturer in Model)
+                {
+                <tr>
+                    <td>@Html.DisplayFor(m => manufacturer.Title)</td>
+                    <td>@Html.DisplayFor(m => manufacturer.Description)</td>
+                    @{string exist = manufacturer.Logo.Length > 0 ? "true" : "false";}
+                    <td>@exist</td>
+
+                    <td><partial name="_TableEditDeleteButtons" model="manufacturer.Id" /></td>
+
+                </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>No manufacturer has defined yet...</p>
+    }
+
+</div>

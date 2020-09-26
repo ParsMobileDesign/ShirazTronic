@@ -54,7 +54,7 @@ namespace ShirazTronic
         {
             var claims = (ClaimsIdentity)iController.User.Identity;
             var claim = claims.FindFirst(ClaimTypes.NameIdentifier);
-            return claim.Value;
+            return claim!=null?claim.Value:"";
         }
         public static string SaveFileThenGetFileName(IWebHostEnvironment iWebHostEnvironment,string iWWWRootDesireFolder, IFormFileCollection iFile,string fileNameTobeSaved)
         {

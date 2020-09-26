@@ -6,4 +6,9 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
   <PropertyGroup>
     <_PublishTargetUrl>C:\inetpub\wwwroot\ShirazTronicPublish</_PublishTargetUrl>
   </PropertyGroup>
+  <ItemGroup>
+    <File Include="Views/Shared/_LoginPartial.cshtml">
+      <publishTime>08/30/2020 11:12:18</publishTime>
+    </File>
+  </ItemGroup>
 </Project>

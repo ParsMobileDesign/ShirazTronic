@@ -106,16 +106,23 @@ $(document).ready(function () {
             });
         }
     });
-
-    $('[id ^= "btnAddToCart_"]').click(function () {
-         var pId = $(this).attr('id').split("_")[1];
-        $('#shoppingCart').load('/Customer/Product/AddToCart?ProductId=' + pId, function (response, status, xhr) {
-            if (status == "error") {
-                window.location="/Identity/Account/Login"
-            }
-        });
+    bindAddToCartClick();
+    $('#grid').on('DOMSubtreeModified', function () {
+        $('[id ^= "btnAddToCart_"]').unbind('click');
+        bindAddToCartClick();
     });
 
+    function bindAddToCartClick() {
+        $('[id ^= "btnAddToCart_"]').click(function () {
+            var pId = $(this).attr('id').split("_")[1];
+            $('#shoppingCart').load('/Customer/Product/AddToCart?ProductId=' + pId, function (response, status, xhr) {
+                if (status == "error") {
+                    window.location = "/Identity/Account/Login"
+                }
+            });
+        });
+    }
+    $('.custom-data-table').DataTable();
 
 });
 

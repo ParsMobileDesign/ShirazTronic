@@ -23,7 +23,7 @@ namespace ShirazTronic.Areas.Customer.Controllers
     {
         private readonly ApplicationDbContext db;
         private readonly IConfiguration Configuration;
-        public CartController(ApplicationDbContext _db,IConfiguration iConfig)
+        public CartController(ApplicationDbContext _db, IConfiguration iConfig)
         {
             db = _db;
             Configuration = iConfig;
@@ -117,7 +117,7 @@ namespace ShirazTronic.Areas.Customer.Controllers
                 shoppingCart.MemOrder.PaymentStatus = U.PaymentStatus_Rejected;
             else
                 shoppingCart.MemOrder.TransactionId = charge.BalanceTransactionId;
-            if(charge.Status.ToLower()=="succeeded")
+            if (charge.Status.ToLower() == "succeeded")
             {
                 shoppingCart.MemOrder.PaymentStatus = U.PaymentStatus_Approved;
                 shoppingCart.MemOrder.OrderStatus = U.OrderStatus_Submitted;
@@ -132,7 +132,7 @@ namespace ShirazTronic.Areas.Customer.Controllers
         public ActionResult CreateCheckoutSession()
         {
             string userId = U.getUserId(this);
-            var cartItems = db.ShoppingCart.Include(e=>e.Product).Where(sc => sc.AppUserId == userId).ToList();
+            var cartItems = db.ShoppingCart.Include(e => e.Product).Where(sc => sc.AppUserId == userId).ToList();
             decimal total = 0;
             foreach (var item in cartItems)
                 total += item.Count * item.Product.UnitPrice;
@@ -174,6 +174,8 @@ namespace ShirazTronic.Areas.Customer.Controllers
         /// <returns></returns>
         public async Task<IActionResult> cartChange(int cartId, string task)
         {
+            string userId = U.getUserId(this);
+
             var shoppingcartInDB = await db.ShoppingCart.FirstOrDefaultAsync(e => e.Id == cartId);
             if (shoppingcartInDB != null)
             {
@@ -187,15 +189,18 @@ namespace ShirazTronic.Areas.Customer.Controllers
                         shoppingcartInDB.Count++;
                         break;
                     case "rem":
-                        {
-                            db.ShoppingCart.Remove(shoppingcartInDB);
-                            var shoppingCartCount = db.ShoppingCart.Where(e => e.AppUser == shoppingcartInDB.AppUser).Count();
-                            HttpContext.Session.SetInt32(U.ShoppingCartSession, shoppingCartCount);
-                        }
-
+                        db.ShoppingCart.Remove(shoppingcartInDB);
                         break;
                 }
                 await db.SaveChangesAsync();
+
+                if (task == "rem")
+                {
+                    var shoppingCartCount = db.ShoppingCart.Where(e => e.AppUserId == shoppingcartInDB.AppUserId).Count();
+                    HttpContext.Session.SetInt32(U.ShoppingCartSession, shoppingCartCount);
+
+                }
+
             }
             return RedirectToAction(nameof(Index));
         }

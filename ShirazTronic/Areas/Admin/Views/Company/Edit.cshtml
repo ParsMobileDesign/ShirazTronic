@@ -1,6 +1,6 @@
 ﻿@model CompanyInfos
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Edit Company's info";
     Layout = "~/Areas/Admin/Views/_AdminLayout.cshtml";
 }
 
@@ -29,7 +29,16 @@
                 </div>
             </div>
             <div class="form-group">
-
+                <div class="row">
+                    <div class="col-lg-4 col-md-6">
+                        <label asp-for="WebsiteAddr"></label>
+                        <input asp-for="WebsiteAddr" class="form-control" placeholder="Website Address">
+                        <span asp-validation-for="WebsiteAddr" class="text-danger"></span>
+                    </div>
+                   
+                </div>
+            </div>
+            <div class="form-group">
                 <div class="row">
                     <div class="col-lg-8 col-md-6">
                         <label asp-for="Address"></label>

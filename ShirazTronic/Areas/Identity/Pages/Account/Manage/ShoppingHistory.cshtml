@@ -8,13 +8,14 @@
 <div class="container">
     <h4>@ViewData["Title"]</h4>
     <partial name="_StatusMessage" model="Model.StatusMessage" />
-    <table class="table table-bordered table-striped">
+    <table class="table table-bordered table-striped custom-data-table">
         <thead>
             <tr>
                 <th scope="col">Data</th>
                 <th scope="col">Total</th>
                 <th scope="col">Order Status</th>
                 <th scope="col">Transaction Serial</th>
+                <th scope="col">Details</th>
             </tr>
         </thead>
         <tbody>
@@ -25,6 +26,7 @@
                     <td>@item.Total</td>
                     <td>@item.OrderStatus</td>
                     <td>@item.TransactionId</td>
+                    <td><i class="fas fa-info-circle" style="color:palevioletred;cursor:pointer;font-size:1.2rem"></i></td>
                 </tr>
             }
         </tbody>

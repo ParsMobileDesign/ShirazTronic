@@ -1,13 +1,8 @@
-﻿@{
+﻿@model ShirazTronic.Models.ViewModels.VmCustomerHomePage
+@{
     ViewData["Title"] = "Home Page";
 }
 <partial name="ImageCarousel" />
-@*<section class="page-section">
-        <div class="text-center">
-            <h1 class="display-4">Welcome</h1>
-            <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-        </div>
-    </section>*@
 <section id="Manufac" class="page-section Manufac">
     <div class="container">
         <div class="section-title aos-init aos-animate" data-aos="fade-up">
@@ -16,161 +11,136 @@
         </div>
 
         <div class="row no-gutters clients-wrap clearfix aos-init aos-animate" data-aos="fade-up">
-
-            <div class="col-lg-3 col-md-4 col-xs-6">
-                <div class="Manufac-logo">
-                    <img src="~/image/Manufacturers/1.jpg" class="img-fluid" alt="">
-                </div>
-            </div>
-
-            <div class="col-lg-3 col-md-4 col-xs-6">
-                <div class="Manufac-logo">
-                    <img src="~/image/Manufacturers/2.jpg" class="img-fluid" alt="">
-                </div>
-            </div>
-
-            <div class="col-lg-3 col-md-4 col-xs-6">
-                <div class="Manufac-logo">
-                    <img src="~/image/Manufacturers/3.jpg" class="img-fluid" alt="">
-                </div>
-            </div>
-
-            <div class="col-lg-3 col-md-4 col-xs-6">
-                <div class="Manufac-logo">
-                    <img src="~/image/Manufacturers/4.jpg" class="img-fluid" alt="">
-                </div>
-            </div>
-
-            <div class="col-lg-3 col-md-4 col-xs-6">
-                <div class="Manufac-logo">
-                    <img src="~/image/Manufacturers/5.jpg" class="img-fluid" alt="">
-                </div>
-            </div>
-
-            <div class="col-lg-3 col-md-4 col-xs-6">
-                <div class="Manufac-logo">
-                    <img src="~/image/Manufacturers/6.jpg" class="img-fluid" alt="">
-                </div>
-            </div>
-
-            <div class="col-lg-3 col-md-4 col-xs-6">
-                <div class="Manufac-logo">
-                    <img src="~/image/Manufacturers/7.jpg" class="img-fluid" alt="">
-                </div>
-            </div>
-
-            <div class="col-lg-3 col-md-4 col-xs-6">
-                <div class="Manufac-logo">
-                    <img src="~/image/Manufacturers/8.jpg" class="img-fluid" alt="">
-                </div>
-            </div>
-
-        </div>
-
-    </div>
-</section>
-
-<section id="about-us" class="about-us">
-    <div class="container">
-
-        <div class="row no-gutters">
-            <div class="image col-xl-5 d-flex align-items-stretch justify-content-center justify-content-lg-start aos-init aos-animate" data-aos="fade-right"></div>
-            <div class="col-xl-7 pl-0 pl-lg-5 pr-lg-1 d-flex align-items-stretch">
-                <div class="content d-flex flex-column justify-content-center">
-                    <h3 data-aos="fade-up" class="aos-init aos-animate">About our Corporation ShirazTronic.com</h3>
-                    <p data-aos="fade-up" class="aos-init aos-animate">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit
-                    </p>
-                    <div class="row">
-                        <div class="col-md-6 icon-box aos-init aos-animate" data-aos="fade-up">
-                            <i class="bx bx-receipt"></i>
-                            <h4>Corporis voluptates sit</h4>
-                            <p>Consequuntur sunt aut quasi enim aliquam quae harum pariatur laboris nisi ut aliquip</p>
-                        </div>
-                        <div class="col-md-6 icon-box aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
-                            <i class="bx bx-cube-alt"></i>
-                            <h4>Ullamco laboris nisi</h4>
-                            <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt</p>
-                        </div>
-                        <div class="col-md-6 icon-box aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
-                            <i class="bx bx-images"></i>
-                            <h4>Labore consequatur</h4>
-                            <p>Aut suscipit aut cum nemo deleniti aut omnis. Doloribus ut maiores omnis facere</p>
-                        </div>
-                        <div class="col-md-6 icon-box aos-init aos-animate" data-aos="fade-up" data-aos-delay="300">
-                            <i class="bx bx-shield"></i>
-                            <h4>Beatae veritatis</h4>
-                            <p>Expedita veritatis consequuntur nihil tempore laudantium vitae denat pacta</p>
-                        </div>
+            @{
+                byte index = 0;
+            }
+            @foreach (var item in Model.Manufacturers)
+            {
+                index++;
+                var base64 = Convert.ToBase64String(item.Logo);
+                var imgsrc = string.Format("data:image/jpeg;base64,{0}", base64);
+                <div class="col-lg-3 col-md-4 col-xs-6">
+                    <div class="Manufac-logo">
+                        <img src="@imgsrc" class="img-fluid" alt="">
                     </div>
-                </div><!-- End .content-->
-            </div>
+                </div>
+                if (index == 8)
+                    break;
+            }
         </div>
     </div>
 </section>
 
-<section id="contact" class="contact page-section" style="padding:100px 0px 0px 0px">
-    <div class="container">
+@{
+    var companyInfo = Model.CompanyInfos != null && Model.CompanyInfos.Count > 0 ? Model.CompanyInfos[0] : null;
+}
+@if (companyInfo != null)
+{
+    <section id="about-us" class="about-us">
+        <div class="container">
 
-        <div class="row justify-content-center aos-init aos-animate" data-aos="fade-up">
-
-            <div class="col-lg-10">
-
-                <div class="info-wrap">
-                    <div class="row">
-                        <div class="col-lg-4 info">
-                            <i class="icofont-google-map"></i>
-                            <h4>Location:</h4>
-                            <p>Shiraz University<br>Fars, Iran</p>
+            <div class="row no-gutters">
+                <div class="image col-xl-5 d-flex align-items-stretch justify-content-center justify-content-lg-start aos-init aos-animate" data-aos="fade-right"></div>
+                <div class="col-xl-7 pl-0 pl-lg-5 pr-lg-1 d-flex align-items-stretch">
+                    <div class="content d-flex flex-column justify-content-center">
+                        <h3 data-aos="fade-up" class="aos-init aos-animate">About our Corporation @companyInfo.Title</h3>
+                        <p data-aos="fade-up" class="aos-init aos-animate">
+                            @companyInfo.Description
+                        </p>
+                        <div class="row">
+                            <div class="col-md-6 icon-box aos-init aos-animate" data-aos="fade-up">
+                                <i class="bx bx-receipt"></i>
+                                <h4>Corporis voluptates sit</h4>
+                                <p>Consequuntur sunt aut quasi enim aliquam quae harum pariatur laboris nisi ut aliquip</p>
+                            </div>
+                            <div class="col-md-6 icon-box aos-init aos-animate" data-aos="fade-up" data-aos-delay="100">
+                                <i class="bx bx-cube-alt"></i>
+                                <h4>Ullamco laboris nisi</h4>
+                                <p>Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt</p>
+                            </div>
+                            <div class="col-md-6 icon-box aos-init aos-animate" data-aos="fade-up" data-aos-delay="200">
+                                <i class="bx bx-images"></i>
+                                <h4>Labore consequatur</h4>
+                                <p>Aut suscipit aut cum nemo deleniti aut omnis. Doloribus ut maiores omnis facere</p>
+                            </div>
+                            <div class="col-md-6 icon-box aos-init aos-animate" data-aos="fade-up" data-aos-delay="300">
+                                <i class="bx bx-shield"></i>
+                                <h4>Beatae veritatis</h4>
+                                <p>Expedita veritatis consequuntur nihil tempore laudantium vitae denat pacta</p>
+                            </div>
                         </div>
+                    </div><!-- End .content-->
+                </div>
+            </div>
+        </div>
+    </section>
 
-                        <div class="col-lg-4 info mt-4 mt-lg-0">
-                            <i class="icofont-envelope"></i>
-                            <h4>Email:</h4>
-                            <p>contact@ShirazTronic.com<br>info@ShirazTronic.com</p>
-                        </div>
 
-                        <div class="col-lg-4 info mt-4 mt-lg-0">
-                            <i class="icofont-phone"></i>
-                            <h4>Call:</h4>
-                            <p>+98 7135266522<br>+98 5589 22475 14</p>
+    <section id="contact" class="contact page-section" style="padding:100px 0px 0px 0px">
+        <div class="container">
+
+            <div class="row justify-content-center aos-init aos-animate" data-aos="fade-up">
+
+                <div class="col-lg-10">
+
+                    <div class="info-wrap">
+                        <div class="row">
+                            <div class="col-lg-4 info">
+                                <i class="icofont-google-map"></i>
+                                <h4>Location:</h4>
+                                <p>@companyInfo.Address</p>
+                            </div>
+
+                            <div class="col-lg-4 info mt-4 mt-lg-0">
+                                <i class="icofont-envelope"></i>
+                                <h4>Email:</h4>
+                                <p>@companyInfo.EMail</p>
+                            </div>
+
+                            <div class="col-lg-4 info mt-4 mt-lg-0">
+                                <i class="icofont-phone"></i>
+                                <h4>Call:</h4>
+                                <p>@companyInfo.TelNo
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="row mt-5 justify-content-center aos-init aos-animate" data-aos="fade-up">
-            <div class="col-lg-10">
-                <form action="forms/contact.php" method="post" role="form" class="php-email-form">
-                    <div class="form-row">
-                        <div class="col-md-6 form-group">
-                            <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
+            <div class="row mt-5 justify-content-center aos-init aos-animate" data-aos="fade-up">
+                <div class="col-lg-10">
+                    <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+                        <div class="form-row">
+                            <div class="col-md-6 form-group">
+                                <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
+                                <div class="validate"></div>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email">
+                                <div class="validate"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject">
                             <div class="validate"></div>
                         </div>
-                        <div class="col-md-6 form-group">
-                            <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email">
+                        <div class="form-group">
+                            <textarea class="form-control" name="message" rows="5" data-rule="required" data-msg="Please write something for us" placeholder="Message"></textarea>
                             <div class="validate"></div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <input type="text" class="form-control" name="subject" id="subject" placeholder="Subject" data-rule="minlen:4" data-msg="Please enter at least 8 chars of subject">
-                        <div class="validate"></div>
-                    </div>
-                    <div class="form-group">
-                        <textarea class="form-control" name="message" rows="5" data-rule="required" data-msg="Please write something for us" placeholder="Message"></textarea>
-                        <div class="validate"></div>
-                    </div>
-                    <div class="mb-3">
-                        <div class="loading">Loading</div>
-                        <div class="error-message"></div>
-                        <div class="sent-message">Your message has been sent. Thank you!</div>
-                    </div>
-                    <div class="text-center"><button type="submit">Send Message</button></div>
-                </form>
+                        <div class="mb-3">
+                            <div class="loading">Loading</div>
+                            <div class="error-message"></div>
+                            <div class="sent-message">Your message has been sent. Thank you!</div>
+                        </div>
+                        <div class="text-center"><button type="submit">Send Message</button></div>
+                    </form>
+                </div>
+
             </div>
 
         </div>
+    </section>
+}
 
-    </div>
-</section>
+

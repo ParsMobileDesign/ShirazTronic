@@ -59,6 +59,22 @@ namespace ShirazTronic.Models
             await userManager.AddToRoleAsync(user, U.ManagerUser);
         }
     }
+    public class Manufacturer
+    {
+        public Manufacturer()
+        {
+            Title = "";
+            Logo = new byte[100];
+            Description = "";
+        }
+        [Key]
+        public int Id { get; set; }
+        [MaxLength(50)]
+        public string Title { get; set; }
+        public byte[] Logo { get; set; }
+        [MaxLength(200)]
+        public string Description { get; set; }
+    }
     public class ConvertExcel
     {
         public IFormFile MyImage { set; get; }
@@ -86,7 +102,7 @@ namespace ShirazTronic.Models
     {
         public CompanyInfos()
         {
-            Title = ""; Address = ""; EMail = ""; TelNo = ""; Description = "";
+            Title = ""; Address = ""; EMail = ""; TelNo = ""; Description = "";WebsiteAddr = "";
         }
         [Key]
         public byte Id { get; set; }
@@ -96,7 +112,7 @@ namespace ShirazTronic.Models
         public string EMail { get; set; }
         public string TelNo { get; set; }
         public string Description { get; set; }
-
+        public string  WebsiteAddr { get; set; }
     }
     public class Category
     {

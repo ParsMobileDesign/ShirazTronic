@@ -5,7 +5,10 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-    <li><a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity.Name!</a></li>
+
+    string temp = User.Identity.Name.Split("@")[0];
+    string userName = !string.IsNullOrEmpty(temp) ? temp : User.Identity.Name;
+    <li><a asp-area="Identity" asp-page="/Account/Manage/ShoppingHistory" title="Manage"><i class="fas fa-user"></i> Hello @userName </a></li>
     <li style="margin-top:11px">
         <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
             <button type="submit" class="nav-link btn btn-link">Logout</button>
